@@ -3,51 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Captura y Matriz de Datos - Mercados 2026</title>
+    <title>Sistema Profesional de Captura - Mercados 2026</title>
     <style>
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #f0f4f8;
-            color: #333;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
             margin: 0;
-            padding: 20px;
+            padding: 25px;
         }
         .container {
             max-width: 1200px;
             margin: 0 auto;
             background: #ffffff;
-            padding: 35px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
         }
         h1 {
             color: #1f4e78;
             text-align: center;
             margin-bottom: 5px;
-            font-size: 22pt;
+            font-size: 24pt;
+            font-weight: 700;
         }
         .subtitle {
             text-align: center;
-            color: #555;
-            margin-bottom: 30px;
+            color: #64748b;
+            margin-bottom: 35px;
             font-size: 11pt;
             font-style: italic;
         }
+        
+        /* SISTEMA DE PESTAÑAS (TABS) */
+        .tabs-menu {
+            display: flex;
+            background-color: #e2e8f0;
+            padding: 6px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            gap: 4px;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 12px 10px;
+            border: none;
+            background: none;
+            color: #475569;
+            font-weight: 600;
+            font-size: 10pt;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .tab-btn:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            color: #1f4e78;
+        }
+        .tab-btn.active {
+            background-color: #ffffff;
+            color: #1f4e78;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        /* CONTENEDORES DE CONTENIDO DE PESTAÑA */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .section-header {
             background-color: #d9e1f2;
             color: #1f4e78;
-            padding: 12px 15px;
+            padding: 14px 18px;
             font-weight: bold;
             font-size: 12pt;
             border-left: 6px solid #1f4e78;
-            margin-top: 30px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-transform: uppercase;
+            border-radius: 0 6px 6px 0;
         }
         .form-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            gap: 24px;
         }
         .form-group {
             display: flex;
@@ -59,122 +107,138 @@
         label {
             font-size: 10pt;
             font-weight: 600;
-            margin-bottom: 6px;
-            color: #2c3e50;
+            margin-bottom: 8px;
+            color: #334155;
         }
         input[type="text"], input[type="number"], select, textarea {
-            padding: 10px 12px;
-            border: 1px solid #babcbe;
-            border-radius: 5px;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
             background-color: #fff2cc;
             font-size: 10pt;
+            color: #1e293b;
             box-sizing: border-box;
+            transition: all 0.2s;
         }
         input:focus, select:focus, textarea:focus {
             background-color: #ffffff;
             border-color: #1f4e78;
             outline: none;
-            box-shadow: 0 0 5px rgba(31,78,120,0.2);
+            box-shadow: 0 0 0 3px rgba(31,78,120,0.15);
         }
         .checkbox-group {
             display: flex;
-            gap: 20px;
+            gap: 25px;
             margin-top: 5px;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
         }
         .checkbox-item {
             display: flex;
             align-items: center;
             font-size: 10pt;
-            font-weight: normal;
+            font-weight: 500;
+            color: #475569;
         }
         .checkbox-item input {
-            margin-right: 8px;
+            margin-right: 10px;
             transform: scale(1.2);
+            cursor: pointer;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
+            margin-top: 5px;
             margin-bottom: 25px;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
         th, td {
-            border: 1px solid #bfbfbf;
-            padding: 10px;
+            border: 1px solid #e2e8f0;
+            padding: 12px 14px;
             font-size: 10pt;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #f8fafc;
             color: #1f4e78;
-            font-weight: bold;
+            font-weight: 700;
+            text-align: center;
         }
         .txt-center { text-align: center; }
         .table-input {
-            width: 95%;
-            padding: 6px;
-            border: 1px solid #ccc;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #cbd5e1;
             border-radius: 4px;
             background-color: #fff2cc;
             text-align: center;
             font-size: 10pt;
+            box-sizing: border-box;
         }
         .row-total {
             background-color: #e2efda;
             font-weight: bold;
             text-align: center;
+            color: #276749;
         }
         .btn-box {
             text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #e0e0e0;
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px solid #e2e8f0;
         }
         .btn-submit {
-            background-color: #2e7d32;
+            background-color: #1e3a8a;
             color: #ffffff;
-            padding: 15px 40px;
+            padding: 16px 45px;
             font-size: 12pt;
             font-weight: bold;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.25);
             transition: all 0.2s ease;
         }
         .btn-submit:hover {
-            background-color: #1b5e20;
+            background-color: #172554;
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 15px rgba(30, 58, 138, 0.35);
         }
 
-        /* DISEÑO DE LA NUEVA SECCIÓN DE ANÁLISIS VISUAL */
+        /* DISEÑO PANEL DE ANÁLISIS AUTOMÁTICO */
         .dashboard-box {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 25px;
+            gap: 30px;
             background: #f8fafc;
-            border: 1px solid #cbd5e1;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 15px;
+            border: 1px solid #e2e8f0;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 5px;
         }
         .chart-container {
             background: white;
             border: 1px solid #e2e8f0;
-            padding: 15px;
-            border-radius: 6px;
+            padding: 20px;
+            border-radius: 8px;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             align-items: center;
-            height: 260px;
+            height: 280px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
         }
         .chart-bars {
             display: flex;
             align-items: flex-end;
-            gap: 30px;
+            gap: 35px;
             width: 100%;
-            height: 200px;
-            border-bottom: 2px solid #475569;
+            height: 220px;
+            border-bottom: 2px solid #94a3b8;
             padding-bottom: 5px;
             justify-content: center;
         }
@@ -182,42 +246,46 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 60px;
+            width: 70px;
         }
         .bar {
             width: 100%;
             background-color: #3b82f6;
-            border-radius: 4px 4px 0 0;
-            transition: height 0.4s ease;
+            border-radius: 6px 6px 0 0;
+            transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: flex-start;
             justify-content: center;
             color: white;
-            font-size: 9pt;
+            font-size: 9.5pt;
             font-weight: bold;
-            padding-top: 5px;
+            padding-top: 6px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
-        .bar.women { background-color: #ec4899; }
-        .bar.men { background-color: #0284c7; }
-        .bar.drivers { background-color: #f59e0b; }
-        .bar.collectors { background-color: #10b981; }
+        .bar.women { background-color: #ec4899; box-shadow: 0 4px 6px rgba(236,72,153,0.2); }
+        .bar.men { background-color: #0284c7; box-shadow: 0 4px 6px rgba(2,132,199,0.2); }
+        .bar.drivers { background-color: #f59e0b; box-shadow: 0 4px 6px rgba(245,158,11,0.2); }
+        .bar.collectors { background-color: #10b981; box-shadow: 0 4px 6px rgba(16,185,129,0.2); }
+        
         .bar-label {
-            font-size: 8.5pt;
+            font-size: 9pt;
             font-weight: 600;
-            color: #475569;
-            margin-top: 8px;
+            color: #64748b;
+            margin-top: 10px;
             text-align: center;
+            line-height: 1.2;
         }
         .analysis-text-box {
             background: white;
             border: 1px solid #e2e8f0;
-            padding: 20px;
-            border-radius: 6px;
-            font-size: 10pt;
-            line-height: 1.6;
-            color: #1e293b;
+            padding: 25px;
+            border-radius: 8px;
+            font-size: 10.5pt;
+            line-height: 1.7;
+            color: #334155;
             overflow-y: auto;
-            height: 235px;
+            height: 250px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
         }
     </style>
 </head>
@@ -227,287 +295,305 @@
     <h1>SISTEMA DE INGRESO Y EXPORTACIÓN DE MATRICES COMUNITARIAS 2026</h1>
     <div class="subtitle">Formulario Dinámico de Registro y Generador Automático de Base de Datos en Excel (.XLS)</div>
 
-    <div class="section-header">1. Registro de Identificación General del Establecimiento</div>
-    <div class="form-grid">
-        <div class="form-group">
-            <label>Nombre del Mercado Base:</label>
-            <input type="text" id="mercado_nombre" oninput="actualizarCálculos()" placeholder="Ej. Mercado Central de Santa Ana">
-        </div>
-        <div class="form-group">
-            <label>Departamento:</label>
-            <input type="text" id="departamento" placeholder="Ej. Santa Ana">
-        </div>
-        <div class="form-group">
-            <label>Sector / Zona de Intervención:</label>
-            <input type="text" id="sector" placeholder="Ej. Sector Terminal Terrestre">
-        </div>
-        <div class="form-group">
-            <label>Nombre del Administrador/a de Turno:</label>
-            <input type="text" id="admin_nombre" placeholder="Nombre completo de la jefatura">
-        </div>
-        <div class="form-group">
-            <label>Número Telefónico de Contacto:</label>
-            <input type="text" id="contacto_num" placeholder="Ej. 2440-XXXX">
-        </div>
-        <div class="form-group">
-            <label>Nombre conocido de la Terminal de Buses:</label>
-            <input type="text" id="terminal_nombre" value="Terminal Lara Pineda">
-        </div>
-        <div class="form-group">
-            <label>Nombre común con el que se conoce el Mercado:</label>
-            <input type="text" id="mercado_conocido" placeholder="Ej. Mercado Lara Pineda">
-        </div>
-        <div class="form-group">
-            <label>Ubicación Local / Dirección de la Terminal:</label>
-            <input type="text" id="ubicacion_local" placeholder="Dirección geográfica exacta">
-        </div>
-        <div class="form-group">
-            <label>N° de empleados municipales asignados:</label>
-            <input type="number" id="empleados_cant" placeholder="Total de personal">
-        </div>
-        <div class="form-group">
-            <label>Puestos / Cargos que ocupan en el sector:</label>
-            <input type="text" id="empleados_puestos" placeholder="Ej. CAM, Colectores, Inspectores, Aseo">
-        </div>
-        <div class="form-group full-width">
-            <label>Servicios Básicos Operativos con los que cuenta la infraestructura:</label>
-            <div class="checkbox-group">
-                <label class="checkbox-item"><input type="checkbox" id="srv_luz"> Luz Eléctrica</label>
-                <label class="checkbox-item"><input type="checkbox" id="srv_agua"> Agua Potable</label>
-                <label class="checkbox-item"><input type="checkbox" id="srv_sanitarios"> Servicios Sanitarios Internos</label>
+    <div class="tabs-menu">
+        <button class="tab-btn active" onclick="cambiarPestana(event, 'tab1')">1. Identificación</button>
+        <button class="tab-btn" onclick="cambiarPestana(event, 'tab2')">2. Censo Vendedores</button>
+        <button class="tab-btn" onclick="cambiarPestana(event, 'tab3')">3. Rutas y Transporte</button>
+        <button class="tab-btn" onclick="cambiarPestana(event, 'tab4')">4. Entorno y Seguridad</button>
+        <button class="tab-btn" onclick="cambiarPestana(event, 'tab5')">📊 Dashboard y Análisis</button>
+    </div>
+
+    <div id="tab1" class="tab-content active">
+        <div class="section-header">1. Registro de Identificación General del Establecimiento</div>
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Nombre del Mercado Base:</label>
+                <input type="text" id="mercado_nombre" oninput="actualizarCálculos()" placeholder="Ej. Mercado Central de Santa Ana">
+            </div>
+            <div class="form-group">
+                <label>Departamento:</label>
+                <input type="text" id="departamento" placeholder="Ej. Santa Ana">
+            </div>
+            <div class="form-group">
+                <label>Sector / Zona de Intervención:</label>
+                <input type="text" id="sector" placeholder="Ej. Sector Terminal Terrestre">
+            </div>
+            <div class="form-group">
+                <label>Nombre del Administrador/a de Turno:</label>
+                <input type="text" id="admin_nombre" placeholder="Nombre completo de la jefatura">
+            </div>
+            <div class="form-group">
+                <label>Número Telefónico de Contacto:</label>
+                <input type="text" id="contacto_num" placeholder="Ej. 2440-XXXX">
+            </div>
+            <div class="form-group">
+                <label>Nombre conocido de la Terminal de Buses:</label>
+                <input type="text" id="terminal_nombre" value="Terminal Lara Pineda">
+            </div>
+            <div class="form-group">
+                <label>Nombre común con el que se conoce el Mercado:</label>
+                <input type="text" id="mercado_conocido" placeholder="Ej. Mercado Lara Pineda">
+            </div>
+            <div class="form-group">
+                <label>Ubicación Local / Dirección de la Terminal:</label>
+                <input type="text" id="ubicacion_local" placeholder="Dirección geográfica exacta">
+            </div>
+            <div class="form-group">
+                <label>N° de empleados municipales asignados:</label>
+                <input type="number" id="empleados_cant" placeholder="Total de personal">
+            </div>
+            <div class="form-group">
+                <label>Puestos / Cargos que ocupan en el sector:</label>
+                <input type="text" id="empleados_puestos" placeholder="Ej. CAM, Colectores, Inspectores, Aseo">
+            </div>
+            <div class="form-group full-width">
+                <label>Servicios Básicos Operativos con los que cuenta la infraestructura:</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox" id="srv_luz"> Luz Eléctrica</label>
+                    <label class="checkbox-item"><input type="checkbox" id="srv_agua"> Agua Potable</label>
+                    <label class="checkbox-item"><input type="checkbox" id="srv_sanitarios"> Servicios Sanitarios Internos</label>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="section-header">2. Censo Demográfico Poblacional de Vendedores del Entorno</div>
-    <table>
-        <thead>
-            <tr>
-                <th style="width: 45%;">Clasificación Operativa del Sector Ventas</th>
-                <th style="width: 15%;">Mujeres (M)</th>
-                <th style="width: 15%;">Hombres (H)</th>
-                <th style="width: 25%; background-color: #e2efda;">Total Calculado</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Arrendatarios con legalidad de contrato</td>
-                <td class="txt-center"><input type="number" id="c1_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td class="txt-center"><input type="number" id="c1_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td id="c1_t" class="row-total">0</td>
-            </tr>
-            <tr>
-                <td>Arrendatarios con licencia</td>
-                <td class="txt-center"><input type="number" id="c2_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td class="txt-center"><input type="number" id="c2_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td id="c2_t" class="row-total">0</td>
-            </tr>
-            <tr>
-                <td>Arrendatarios de locales fijos</td>
-                <td class="txt-center"><input type="number" id="c3_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td class="txt-center"><input type="number" id="c3_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td id="c3_t" class="row-total">0</td>
-            </tr>
-            <tr>
-                <td>Arrendatarios eventuales</td>
-                <td class="txt-center"><input type="number" id="c4_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td class="txt-center"><input type="number" id="c4_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td id="c4_t" class="row-total">0</td>
-            </tr>
-            <tr>
-                <td>Arrendatarios de áreas de chatarreras</td>
-                <td class="txt-center"><input type="number" id="c5_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td class="txt-center"><input type="number" id="c5_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td id="c5_t" class="row-total">0</td>
-            </tr>
-            <tr>
-                <td>Arrendatarios Mayoristas / Distribuidores</td>
-                <td class="txt-center"><input type="number" id="c6_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td class="txt-center"><input type="number" id="c6_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td id="c6_t" class="row-total">0</td>
-            </tr>
-            <tr>
-                <td>Vendedoras/es ambulantes e informales</td>
-                <td class="txt-center"><input type="number" id="c7_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td class="txt-center"><input type="number" id="c7_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td id="c7_t" class="row-total">0</td>
-            </tr>
-            <tr style="background-color: #d9e1f2; font-weight: bold;">
-                <td>TOTAL CONSOLIDADO CENSO VENDEDORES</td>
-                <td id="total_m_censo" class="txt-center">0</td>
-                <td id="total_h_censo" class="txt-center">0</td>
-                <td id="total_global_censo" style="background-color: #c6e0b4; text-align: center;">0</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="section-header">3. Monitoreo de Rutas de Autobuses y Personal de Terminal</div>
-    <table>
-        <thead>
-            <tr>
-                <th style="width: 45%;">Identificación de la Ruta de Transporte</th>
-                <th style="width: 20%;">N° de Motoristas Registrados</th>
-                <th style="width: 20%;">N° de Cobradores Registrados</th>
-                <th style="width: 15%; background-color: #e2efda;">Total de Personal</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><input type="text" id="r1_id" class="table-input" style="text-align: left;" placeholder="Ej. Ruta 210 (Santa Ana - Ahuachapán)"></td>
-                <td><input type="number" id="r1_mot" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td><input type="number" id="r1_cob" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td id="r1_tot" class="row-total">0</td>
-            </tr>
-            <tr>
-                <td><input type="text" id="r2_id" class="table-input" style="text-align: left;" placeholder="Ej. Ruta Interdepartamental Directa"></td>
-                <td><input type="number" id="r2_mot" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td><input type="number" id="r2_cob" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td id="r2_tot" class="row-total">0</td>
-            </tr>
-            <tr>
-                <td><input type="text" id="r3_id" class="table-input" style="text-align: left;" placeholder="Ruta Adicional Local u Ordinaria"></td>
-                <td><input type="number" id="r3_mot" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td><input type="number" id="r3_cob" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                <td id="r3_tot" class="row-total">0</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="section-header">4. Convivencia, Percepción de Riesgos e Incidencias en Seguridad</div>
-    <div class="form-grid">
-        <div class="form-group">
-            <label>Relación general de empresarios/transportistas con la administración:</label>
-            <select id="empresarios_rel" onchange="actualizarCálculos()">
-                <option value="Favorable y fluida con mesas de trabajo activas">Favorable y fluida con mesas de trabajo activas</option>
-                <option value="Intermitente o coordinada solo ante crisis">Intermitente o coordinada solo ante crisis</option>
-                <option value="Tensa con desacuerdos en cánones o parqueos">Tensa con desacuerdos en cánones o parqueos</option>
-                <option value="Nula o sin canales formales de diálogo">Nula o sin canales formales de diálogo</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Presencia de directivas, comités o sindicatos en el sector:</label>
-            <input type="text" id="directivas_comites" placeholder="Ej. Sindicato Unificado de Vendedores de la Terminal, Junta de Transportistas">
-        </div>
-        <div class="form-group">
-            <label>Iglesias vigentes detectadas en el entorno periférico:</label>
-            <input type="text" id="iglesias_data" placeholder="Nombres de templos o misiones identificadas">
-        </div>
-        <div class="form-group">
-            <label>N° de botaderos o focos críticos de acumulación de basura:</label>
-            <input type="text" id="botaderos_cant" placeholder="Ej. 2 puntos críticos internos, 1 contenedor principal periférico">
-        </div>
-        <div class="form-group">
-            <label>Prevalencia de Robos o Hurtos a usuarios y mercaderías:</label>
-            <select id="inc_robo" onchange="actualizarCálculos()">
-                <option value="Baja (Raras veces al año)">Baja (Raras veces al año)</option>
-                <option value="Media (Ocurrencia mensual focalizada)">Media (Ocurrencia mensual focalizada)</option>
-                <option value="Alta (Reportes semanales constantes)">Alta (Reportes semanales constantes)</option>
-                <option value="Nunca se registran incidencias">Nunca se registran incidencias</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Frecuencia Operativa de Patrullaje del Cuerpo de Agentes Municipales (CAM):</label>
-            <select id="cam_frecuencia">
-                <option value="Continua durante todo el turno operativo">Continua durante todo el turno operativo</option>
-                <option value="Establecida en 1 o 2 recorridos programados por turno">Establecida en 1 o 2 recorridos programados por turno</option>
-                <option value="Únicamente bajo requerimiento o llamado administrativo de emergencia">Únicamente bajo requerimiento o llamado administrativo de emergencia</option>
-                <option value="No se registra presencia del CAM en el perímetro">No se registra presencia del CAM en el perímetro</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Articulación institucional con la Policía Nacional Civil (PNC):</label>
-            <select id="pnc_articulacion">
-                <option value="SI - Coordinación estrecha y patrullajes combinados periódicos">SI - Coordinación estrecha y patrullajes combinados</option>
-                <option value="NO - Operación de seguridad municipal aislada o reactiva">NO - Operación de seguridad municipal aislada o reactiva</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Estado de Control Territorial Actual / Actividad de Pandillas (Remanentes):</label>
-            <select id="pandillas_estado" onchange="actualizarCálculos()">
-                <option value="Cese visible de funciones y desarticulación territorial evidente">Cese visible de funciones y desarticulación evidente</option>
-                <option value="Mutación interna (Dinámicas de control ocultas o latentes sin visibilidad pública)">Mutación interna (Dinámicas ocultas)</option>
-                <option value="Presencia residual esporádica (Células desorganizadas aisladas)">Presencia residual esporádica (Células aisladas)</option>
-                <option value="Sin indicios ni reportes de operatividad en la zona">Sin indicios ni reportes de operatividad en la zona</option>
-            </select>
-        </div>
-        <div class="form-group full-width">
-            <label>Análisis Cualitativo del Entorno Delictivo Actual (Dinámicas de campo y convivencia):</label>
-            <textarea id="analisis_cualitativo" oninput="actualizarCálculos()" rows="3" placeholder="Describa la reality observada..."></textarea>
-        </div>
+    <div id="tab2" class="tab-content">
+        <div class="section-header">2. Censo Demográfico Poblacional de Vendedores del Entorno</div>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 45%;">Clasificación Operativa del Sector Ventas</th>
+                    <th style="width: 15%;">Mujeres (M)</th>
+                    <th style="width: 15%;">Hombres (H)</th>
+                    <th style="width: 25%; background-color: #e2efda;">Total Calculado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Arrendatarios con legalidad de contrato</td>
+                    <td class="txt-center"><input type="number" id="c1_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td class="txt-center"><input type="number" id="c1_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td id="c1_t" class="row-total">0</td>
+                </tr>
+                <tr>
+                    <td>Arrendatarios con licencia</td>
+                    <td class="txt-center"><input type="number" id="c2_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td class="txt-center"><input type="number" id="c2_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td id="c2_t" class="row-total">0</td>
+                </tr>
+                <tr>
+                    <td>Arrendatarios de locales fijos</td>
+                    <td class="txt-center"><input type="number" id="c3_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td class="txt-center"><input type="number" id="c3_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td id="c3_t" class="row-total">0</td>
+                </tr>
+                <tr>
+                    <td>Arrendatarios eventuales</td>
+                    <td class="txt-center"><input type="number" id="c4_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td class="txt-center"><input type="number" id="c4_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td id="c4_t" class="row-total">0</td>
+                </tr>
+                <tr>
+                    <td>Arrendatarios de áreas de chatarreras</td>
+                    <td class="txt-center"><input type="number" id="c5_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td class="txt-center"><input type="number" id="c5_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td id="c5_t" class="row-total">0</td>
+                </tr>
+                <tr>
+                    <td>Arrendatarios Mayoristas / Distribuidores</td>
+                    <td class="txt-center"><input type="number" id="c6_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td class="txt-center"><input type="number" id="c6_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td id="c6_t" class="row-total">0</td>
+                </tr>
+                <tr>
+                    <td>Vendedoras/es ambulantes e informales</td>
+                    <td class="txt-center"><input type="number" id="c7_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td class="txt-center"><input type="number" id="c7_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td id="c7_t" class="row-total">0</td>
+                </tr>
+                <tr style="background-color: #d9e1f2; font-weight: bold;">
+                    <td>TOTAL CONSOLIDADO CENSO VENDEDORES</td>
+                    <td id="total_m_censo" class="txt-center">0</td>
+                    <td id="total_h_censo" class="txt-center">0</td>
+                    <td id="total_global_censo" style="background-color: #c6e0b4; text-align: center; color: #1e4620;">0</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <div class="section-header">5. Indicadores Socioeconómicos de Vulnerabilidad de Género y Productos No Regulados</div>
-    <div class="form-grid">
-        <div class="form-group">
-            <label>Proporción estimada de vendedoras Jefas de Hogar:</label>
-            <select id="jefas_hogar">
-                <option value="Predominante (Más del 75% del censo femenino)">Predominante (Más del 75%)</option>
-                <option value="Alta (Entre el 50% y el 75% de las vendedoras)">Alta (Entre el 50% y el 75%)</option>
-                <option value="Moderada (Entre el 25% y el 50% de los locales)">Moderada (Entre el 25% y el 50%)</option>
-                <option value="Baja (Menos del 25% del total de puestos)">Baja (Menos del 25%)</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Presencia de Niños, Niñas y Adolescentes (NNA) en los locales:</label>
-            <select id="nna_presencia">
-                <option value="Alta (Permanencia diaria acompañando las actividades comerciales)">Alta (Permanencia diaria en puestos)</option>
-                <option value="Media (Acompañamiento recurrente solo en jornadas vespertinas o fines de semana)">Media (Tardes o fines de semana)</option>
-                <option value="Baja / Nula (Los menores asisten a centros escolares o guarderías externas)">Baja / Nula presencia en andenes</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Ruta formalizada de derivación activa (ISDEMU / UNIMUJER):</label>
-            <select id="ruta_derivacion">
-                <option value="SI - Protocolo institucional implementado y conocido por administración">SI - Protocolo de enlace activo</option>
-                <option value="NO - Carencia de mecanismos oficiales directos en la terminal">NO - Sin mecanismos oficiales directos</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Comercialización detectada de Cigarrillos de Contrabando:</label>
-            <select id="contrabando_cigarrillos">
-                <option value="Presencia Alta (Exhibición y venta abierta en canastos/periferia)">Presencia Alta (Venta abierta visible)</option>
-                <option value="Presencia Moderada (Distribución discreta o bajo demanda específica)">Presencia Moderada (Distribución discreta)</option>
-                <option value="Presencia Inexistente o sin registros actuales en la terminal">Presencia Inexistente o sin registros</option>
-            </select>
-        </div>
+    <div id="tab3" class="tab-content">
+        <div class="section-header">3. Monitoreo de Rutas de Autobuses y Personal de Terminal</div>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 45%;">Identificación de la Ruta de Transporte</th>
+                    <th style="width: 20%;">N° de Motoristas Registrados</th>
+                    <th style="width: 20%;">N° de Cobradores Registrados</th>
+                    <th style="width: 15%; background-color: #e2efda;">Total de Personal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" id="r1_id" class="table-input" style="text-align: left;" placeholder="Ej. Ruta 210 (Santa Ana - Ahuachapán)"></td>
+                    <td><input type="number" id="r1_mot" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td><input type="number" id="r1_cob" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td id="r1_tot" class="row-total">0</td>
+                </tr>
+                <tr>
+                    <td><input type="text" id="r2_id" class="table-input" style="text-align: left;" placeholder="Ej. Ruta Interdepartamental Directa"></td>
+                    <td><input type="number" id="r2_mot" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td><input type="number" id="r2_cob" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td id="r2_tot" class="row-total">0</td>
+                </tr>
+                <tr>
+                    <td><input type="text" id="r3_id" class="table-input" style="text-align: left;" placeholder="Ruta Adicional Local u Ordinaria"></td>
+                    <td><input type="number" id="r3_mot" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td><input type="number" id="r3_cob" class="table-input" value="0" oninput="actualizarCálculos()"></td>
+                    <td id="r3_tot" class="row-total">0</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <div class="section-header">6. Validación del Levantamiento de Información</div>
-    <div class="form-grid">
-        <div class="form-group">
-            <label>Nombre del Evaluador / Responsable Técnico:</label>
-            <input type="text" id="responsable_tecnico" placeholder="Nombre completo del recopilador">
-        </div>
-        <div class="form-group">
-            <label>Fecha de Validación de los Datos:</label>
-            <input type="text" id="fecha_validacion" value="13 / 06 / 2026" style="text-align: center;">
-        </div>
-    </div>
-
-    <div class="section-header">5. Panel de Análisis Automático en Tiempo Real</div>
-    <div class="dashboard-box">
-        <div class="chart-container">
-            <div class="chart-bars">
-                <div class="bar-wrapper">
-                    <div id="bar_women" class="bar women" style="height: 0%;">0</div>
-                    <div class="bar-label">Mujeres<br>(Censo)</div>
-                </div>
-                <div class="bar-wrapper">
-                    <div id="bar_men" class="bar men" style="height: 0%;">0</div>
-                    <div class="bar-label">Hombres<br>(Censo)</div>
-                </div>
-                <div class="bar-wrapper">
-                    <div id="bar_drivers" class="bar drivers" style="height: 0%;">0</div>
-                    <div class="bar-label">Motoristas<br>(Rutas)</div>
-                </div>
-                <div class="bar-wrapper">
-                    <div id="bar_collectors" class="bar collectors" style="height: 0%;">0</div>
-                    <div class="bar-label">Cobradores<br>(Rutas)</div>
-                </div>
+    <div id="tab4" class="tab-content">
+        <div class="section-header">4. Convivencia, Percepción de Riesgos e Incidencias en Seguridad</div>
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Relación general de empresarios/transportistas con la administración:</label>
+                <select id="empresarios_rel" onchange="actualizarCálculos()">
+                    <option value="Favorable y fluida con mesas de trabajo activas">Favorable y fluida con mesas de trabajo activas</option>
+                    <option value="Intermitente o coordinada solo ante crisis">Intermitente o coordinada solo ante crisis</option>
+                    <option value="Tensa con desacuerdos en cánones o parqueos">Tensa con desacuerdos en cánones o parqueos</option>
+                    <option value="Nula o sin canales formales de diálogo">Nula o sin canales formales de diálogo</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Presencia de directivas, comités o sindicatos en el sector:</label>
+                <input type="text" id="directivas_comites" placeholder="Ej. Sindicato Unificado de Vendedores de la Terminal, Junta de Transportistas">
+            </div>
+            <div class="form-group">
+                <label>Iglesias vigentes detectadas en el entorno periférico:</label>
+                <input type="text" id="iglesias_data" placeholder="Nombres de templos o misiones identificadas">
+            </div>
+            <div class="form-group">
+                <label>N° de botaderos o focos críticos de acumulación de basura:</label>
+                <input type="text" id="botaderos_cant" placeholder="Ej. 2 puntos críticos internos, 1 contenedor principal periférico">
+            </div>
+            <div class="form-group">
+                <label>Prevalencia de Robos o Hurtos a usuarios y mercaderías:</label>
+                <select id="inc_robo" onchange="actualizarCálculos()">
+                    <option value="Baja (Raras veces al año)">Baja (Raras veces al año)</option>
+                    <option value="Media (Ocurrencia mensual focalizada)">Media (Ocurrencia mensual focalizada)</option>
+                    <option value="Alta (Reportes semanales constantes)">Alta (Reportes semanales constantes)</option>
+                    <option value="Nunca se registran incidencias">Nunca se registran incidencias</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Frecuencia Operativa de Patrullaje del Cuerpo de Agentes Municipales (CAM):</label>
+                <select id="cam_frecuencia">
+                    <option value="Continua durante todo el turno operativo">Continua durante todo el turno operativo</option>
+                    <option value="Establecida en 1 o 2 recorridos programados por turno">Establecida en 1 o 2 recorridos programados por turno</option>
+                    <option value="Únicamente bajo requerimiento o llamado administrativo de emergencia">Únicamente bajo requerimiento o llamado administrativo de emergencia</option>
+                    <option value="No se registra presencia del CAM en el perímetro">No se registra presencia del CAM en el perímetro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Articulación institucional con la Policía Nacional Civil (PNC):</label>
+                <select id="pnc_articulacion">
+                    <option value="SI - Coordinación estrecha y patrullajes combinados periódicos">SI - Coordinación estrecha y patrullajes combinados</option>
+                    <option value="NO - Operación de seguridad municipal aislada o reactiva">NO - Operación de seguridad municipal aislada o reactiva</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Estado de Control Territorial Actual / Actividad de Pandillas (Remanentes):</label>
+                <select id="pandillas_estado" onchange="actualizarCálculos()">
+                    <option value="Cese visible de funciones y desarticulación territorial evidente">Cese visible de funciones y desarticulación evidente</option>
+                    <option value="Mutación interna (Dinámicas de control ocultas o latentes sin visibilidad pública)">Mutación interna (Dinámicas ocultas)</option>
+                    <option value="Presencia residual esporádica (Células desorganizadas aisladas)">Presencia residual esporádica (Células aisladas)</option>
+                    <option value="Sin indicios ni reportes de operatividad en la zona">Sin indicios ni reportes de operatividad en la zona</option>
+                </select>
+            </div>
+            <div class="form-group full-width">
+                <label>Análisis Cualitativo del Entorno Delictivo Actual (Dinámicas de campo y convivencia):</label>
+                <textarea id="analisis_cualitativo" oninput="actualizarCálculos()" rows="3" placeholder="Describa la realidad observada..."></textarea>
             </div>
         </div>
-        <div id="analysis_text" class="analysis-text-box">
-            <i>Ingrese datos numéricos en el censo y rutas para generar las observaciones y el diagnóstico general automáticamente...</i>
+
+        <div style="margin-top: 35px;" class="section-header">5. Indicadores Socioeconómicos de Vulnerabilidad de Género y Productos No Regulados</div>
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Proporción estimada de vendedoras Jefas de Hogar:</label>
+                <select id="jefas_hogar">
+                    <option value="Predominante (Más del 75% del censo femenino)">Predominante (Más del 75%)</option>
+                    <option value="Alta (Entre el 50% y el 75% de las vendedoras)">Alta (Entre el 50% y el 75%)</option>
+                    <option value="Moderada (Entre el 25% y el 50% de los locales)">Moderada (Entre el 25% y el 50%)</option>
+                    <option value="Baja (Menos del 25% del total de puestos)">Baja (Menos del 25%)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Presencia de Niños, Niñas y Adolescentes (NNA) en los locales:</label>
+                <select id="nna_presencia">
+                    <option value="Alta (Permanencia diaria acompañando las actividades comerciales)">Alta (Permanencia diaria en puestos)</option>
+                    <option value="Media (Acompañamiento recurrente solo en jornadas vespertinas o fines de semana)">Media (Tardes o fines de semana)</option>
+                    <option value="Baja / Nula (Los menores asisten a centros escolares o guarderías externas)">Baja / Nula presencia en andenes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Ruta formalizada de derivación activa (ISDEMU / UNIMUJER):</label>
+                <select id="ruta_derivacion">
+                    <option value="SI - Protocolo institucional implementado y conocido por administración">SI - Protocolo de enlace activo</option>
+                    <option value="NO - Carencia de mecanismos oficiales directos en la terminal">NO - Sin mecanismos oficiales directos</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Comercialización detectada de Cigarrillos de Contrabando:</label>
+                <select id="contrabando_cigarrillos">
+                    <option value="Presencia Alta (Exhibición y venta abierta en canastos/periferia)">Presencia Alta (Venta abierta visible)</option>
+                    <option value="Presencia Moderada (Distribución discreta o bajo demanda específica)">Presencia Moderada (Distribución discreta)</option>
+                    <option value="Presencia Inexistente o sin registros actuales en la terminal">Presencia Inexistente o sin registros</option>
+                </select>
+            </div>
+        </div>
+
+        <div style="margin-top: 35px;" class="section-header">6. Validación del Levantamiento de Información</div>
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Nombre del Evaluador / Responsable Técnico:</label>
+                <input type="text" id="responsable_tecnico" placeholder="Nombre completo del recopilador">
+            </div>
+            <div class="form-group">
+                <label>Fecha de Validación de los Datos:</label>
+                <input type="text" id="fecha_validacion" value="13 / 06 / 2026" style="text-align: center;">
+            </div>
+        </div>
+    </div>
+
+    <div id="tab5" class="tab-content">
+        <div class="section-header">Panel de Análisis Estadístico y Diagnóstico Automático en Tiempo Real</div>
+        <div class="dashboard-box">
+            <div class="chart-container">
+                <div class="chart-bars">
+                    <div class="bar-wrapper">
+                        <div id="bar_women" class="bar women" style="height: 0%;">0</div>
+                        <div class="bar-label">Mujeres<br>(Censo)</div>
+                    </div>
+                    <div class="bar-wrapper">
+                        <div id="bar_men" class="bar men" style="height: 0%;">0</div>
+                        <div class="bar-label">Hombres<br>(Censo)</div>
+                    </div>
+                    <div class="bar-wrapper">
+                        <div id="bar_drivers" class="bar drivers" style="height: 0%;">0</div>
+                        <div class="bar-label">Motoristas<br>(Rutas)</div>
+                    </div>
+                    <div class="bar-wrapper">
+                        <div id="bar_collectors" class="bar collectors" style="height: 0%;">0</div>
+                        <div class="bar-label">Cobradores<br>(Rutas)</div>
+                    </div>
+                </div>
+            </div>
+            <div id="analysis_text" class="analysis-text-box">
+                <i>Ingrese datos numéricos en las pestañas de "Censo" y "Rutas" para activar los motores de análisis automático de campo...</i>
+            </div>
         </div>
     </div>
 
@@ -517,6 +603,21 @@
 </div>
 
 <script>
+    // Lógica interactiva para cambiar de pestañas sin recargar
+    function cambiarPestana(evt, tabId) {
+        let i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabId).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+
     function actualizarCálculos() {
         // Cálculo del Censo de Vendedores
         let censoM = 0, censoH = 0, censoGlobal = 0;
@@ -544,7 +645,7 @@
             totalCob += cob;
         }
 
-        // --- LÓGICA DE LA GRÁFICA DE BARRAS DINÁMICA ---
+        // --- GRÁFICA DE BARRAS DINÁMICA ---
         let maxValor = Math.max(censoM, censoH, totalMot, totalCob, 10);
         
         let hWomen = (censoM / maxValor) * 100;
@@ -564,241 +665,11 @@
         document.getElementById('bar_collectors').style.height = hCollectors + '%';
         document.getElementById('bar_collectors').innerText = totalCob;
 
-        // --- LÓGICA DEL TEXTO DE OBSERVACIONES AUTOMÁTICAS ---
+        // --- DIAGNÓSTICO ESCRITO AUTOMATIZADO ---
         let mercadoNombre = document.getElementById('mercado_nombre').value || 'el establecimiento';
         let incRobo = document.getElementById('inc_robo').value;
         let pandillasEst = document.getElementById('pandillas_estado').value;
         let txtCualitativo = document.getElementById('analisis_cualitativo').value;
 
         if (censoGlobal === 0 && totalMot === 0) {
-            document.getElementById('analysis_text').innerHTML = "<i>Ingrese datos numéricos en el censo y rutas para generar las observaciones y el diagnóstico general automáticamente...</i>";
-            return;
-        }
-
-        let obsHTML = `<strong>OBSERVACIONES Y DIAGNÓSTICO PRELIMINAR:</strong><br><br>`;
-        obsHTML += `El levantamiento demográfico en <strong>${mercadoNombre}</strong> consolida una población comercial activa de <strong>${censoGlobal} vendedores</strong> dentro de la infraestructura y su periferia inmediata. `;
-        
-        if (censoM > censoH) {
-            obsHTML += `Existe una marcada prevalencia de participación femenina, representando un <strong>${Math.round((censoM/censoGlobal)*100)}%</strong> del censo local, lo que resalta la necesidad de enfocar las políticas de ordenamiento institucional con perspectiva socioeconómica y de género. `;
-        } else if (censoH > censoM) {
-            obsHTML += `El sector cuenta con una mayoría de representación masculina que equivale al <strong>${Math.round((censoH/censoGlobal)*100)}%</strong> del total general de puestos censados. `;
-        }
-
-        obsHTML += `<br><br>En el componente logístico y de transporte, se identificó un flujo de personal operativo de terminal de <strong>${totalMot} motoristas</strong> y <strong>${totalCob} cobradores</strong> de autobuses. `;
-        obsHTML += `La relación general entre las empresas de transporte y el equipo de administración se califica actualmente como <i>"${document.getElementById('empresarios_rel').value}"</i>.<br><br>`;
-        
-        obsHTML += `<strong>Evaluación de Seguridad Interna:</strong> El entorno presenta una vulnerabilidad ante hechos delictivos calificada como <strong>"${incRobo}"</strong>. `;
-        obsHTML += `Respecto al control y contención de estructuras criminales (pandillas), los datos en campo reflejan un estado de: <u>${pandillasEst}</u>. `;
-
-        if (txtCualitativo.trim() !== "") {
-            obsHTML += `<br><br><strong>Análisis Cualitativo Adicional:</strong> ${txtCualitativo}`;
-        }
-
-        document.getElementById('analysis_text').innerHTML = obsHTML;
-    }
-
-    function exportarMatrizConsolidada() {
-        // Extracción de datos del DOM
-        let mercado = document.getElementById('mercado_nombre').value || 'N/A';
-        let depto = document.getElementById('departamento').value || 'N/A';
-        let sector = document.getElementById('sector').value || 'N/A';
-        let admin = document.getElementById('admin_nombre').value || 'N/A';
-        let contacto = document.getElementById('contacto_num').value || 'N/A';
-        let terminal = document.getElementById('terminal_nombre').value || 'Terminal Lara Pineda';
-        let conocido = document.getElementById('mercado_conocido').value || 'N/A';
-        let ubicacion = document.getElementById('ubicacion_local').value || 'N/A';
-        let emp_cant = document.getElementById('empleados_cant').value || '0';
-        let emp_puestos = document.getElementById('empleados_puestos').value || 'N/A';
-        
-        let s_luz = document.getElementById('srv_luz').checked ? 'SI' : 'NO';
-        let s_agua = document.getElementById('srv_agua').checked ? 'SI' : 'NO';
-        let s_san = document.getElementById('srv_sanitarios').checked ? 'SI' : 'NO';
-
-        let emp_rel = document.getElementById('empresarios_rel').value;
-        let dir_com = document.getElementById('directivas_comites').value || 'N/A';
-        let iglesias = document.getElementById('iglesias_data').value || 'N/A';
-        let botaderos = document.getElementById('botaderos_cant').value || 'N/A';
-        let robo = document.getElementById('inc_robo').value;
-        let cam = document.getElementById('cam_frecuencia').value;
-        let pnc = document.getElementById('pnc_articulacion').value;
-        let pandillas = document.getElementById('pandillas_estado').value;
-        let cualitativo = document.getElementById('analisis_cualitativo').value || 'N/A';
-
-        let jefas = document.getElementById('jefas_hogar').value;
-        let nna = document.getElementById('nna_presencia').value;
-        let ruta = document.getElementById('ruta_derivacion').value;
-        let cigarros = document.getElementById('contrabando_cigarrillos').value;
-
-        let resp = document.getElementById('responsable_tecnico').value || 'N/A';
-        let fecha = document.getElementById('fecha_validacion').value || '13/06/2026';
-
-        // Estructuración de la matriz en formato HTML compatible con Microsoft Excel
-        let excelStructure = `
-        <table border="1">
-            <tr><th colspan="16" style="background-color: #1F4E78; color: #FFFFFF; font-weight: bold; text-align: center; font-size: 14pt; height: 40px;">MATRIZ GENERAL DE LEVANTAMIENTO DE INFORMACIÓN DE MERCADOS 2026</th></tr>
-            
-            <tr><th colspan="16" style="background-color: #D9E1F2; color: #1F4E78; font-weight: bold; text-align: left; font-size: 11pt; height: 25px;">1. REGISTRO DE IDENTIFICACIÓN GENERAL Y SERVICIOS</th></tr>
-            <tr style="background-color: #F2F2F2; font-weight: bold; text-align: center; font-size: 10pt;">
-                <td style="border: 1px solid #BFBFBF;">ID_FICHA</td>
-                <td style="border: 1px solid #BFBFBF;">FECHA_ACTUALIZACION</td>
-                <td style="border: 1px solid #BFBFBF;">RESPONSABLE_LEVANTAMIENTO</td>
-                <td style="border: 1px solid #BFBFBF;">MERCADO_NOMBRE</td>
-                <td style="border: 1px solid #BFBFBF;">DEPARTAMENTO</td>
-                <td style="border: 1px solid #BFBFBF;">SECTOR</td>
-                <td style="border: 1px solid #BFBFBF;">ADMINISTRADOR_NOMBRE</td>
-                <td style="border: 1px solid #BFBFBF;">CONTACTO_NUMERO</td>
-                <td style="border: 1px solid #BFBFBF;">TERMINAL_BUSES_NOMBRE</td>
-                <td style="border: 1px solid #BFBFBF;">MERCADO_CONOCIDO_COMO</td>
-                <td style="border: 1px solid #BFBFBF;">UBICACION_LOCAL_TERMINAL</td>
-                <td style="border: 1px solid #BFBFBF;">EMPLEADOS_MUNICIPALES_CANTIDAD</td>
-                <td style="border: 1px solid #BFBFBF;">PUESTOS_EMPLEADOS</td>
-                <td style="border: 1px solid #BFBFBF;">SERVICIOS_LUZ</td>
-                <td style="border: 1px solid #BFBFBF;">SERVICIOS_AGUA</td>
-                <td style="border: 1px solid #BFBFBF;">SERVICIOS_SANITARIOS</td>
-            </tr>
-            <tr style="text-align: center; font-size: 10pt;">
-                <td style="border: 1px solid #BFBFBF; font-weight: bold; background-color: #F2F2F2;">1</td>
-                <td style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${fecha}</td>
-                <td style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${resp}</td>
-                <td style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${mercado}</td>
-                <td style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${depto}</td>
-                <td style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${sector}</td>
-                <td style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${admin}</td>
-                <td style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${contacto}</td>
-                <td style="border: 1px solid #BFBFBF; font-weight: bold; background-color: #FFF2CC;">${terminal}</td>
-                <td style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${conocido}</td>
-                <td style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${ubicacion}</td>
-                <td style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${emp_cant}</td>
-                <td style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${emp_puestos}</td>
-                <td style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${s_luz}</td>
-                <td style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${s_agua}</td>
-                <td style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${s_san}</td>
-            </tr>
-            <tr><td colspan="16" style="height: 15px; border: none;"></td></tr>
-
-            <tr><th colspan="16" style="background-color: #D9E1F2; color: #1F4E78; font-weight: bold; text-align: left; font-size: 11pt; height: 25px;">2. MATRIZ DE CENSO DEMOGRÁFICO DE VENDEDORES DEL ENTORNO</th></tr>
-            <tr style="background-color: #F2F2F2; font-weight: bold; text-align: center; font-size: 10pt;">
-                <td style="border: 1px solid #BFBFBF;">ID_FICHA</td>
-                <td colspan="6" style="border: 1px solid #BFBFBF;">Clasificación de Vendedores Registrados</td>
-                <td colspan="3" style="border: 1px solid #BFBFBF;">Mujeres (M)</td>
-                <td colspan="3" style="border: 1px solid #BFBFBF;">Hombres (H)</td>
-                <td colspan="3" style="background-color: #E2EFDA; border: 1px solid #BFBFBF;">Total Parcial (T)</td>
-            </tr>
-        `;
-
-        let labelsCenso = [
-            "Arrendatarios con legalidad de contrato", "Arrendatarios con licencia",
-            "Arrendatarios de locales fijos", "Arrendatarios eventuales",
-            "Arrendatarios de áreas de chatarreras", "Arrendatarios Mayoristas / Distribuidores",
-            "Vendedoras/es ambulantes e informales"
-        ];
-        
-        for (let i = 1; i <= 7; i++) {
-            let m = document.getElementById(`c${i}_m`).value || '0';
-            let h = document.getElementById(`c${i}_h`).value || '0';
-            let t = document.getElementById(`c${i}_t`).innerText;
-            excelStructure += `
-            <tr style="text-align: center; font-size: 10pt;">
-                <td style="border: 1px solid #BFBFBF; background-color: #F2F2F2;">1</td>
-                <td colspan="6" style="border: 1px solid #BFBFBF; text-align: left;">${labelsCenso[i-1]}</td>
-                <td colspan="3" style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${m}</td>
-                <td colspan="3" style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${h}</td>
-                <td colspan="3" style="border: 1px solid #BFBFBF; background-color: #E2EFDA; font-weight: bold;">${t}</td>
-            </tr>`;
-        }
-
-        excelStructure += `
-            <tr style="text-align: center; font-weight: bold; background-color: #D9E1F2; font-size: 10pt;">
-                <td style="border: 1px solid #BFBFBF;">1</td>
-                <td colspan="6" style="border: 1px solid #BFBFBF; text-align: left;">TOTAL CONSOLIDADO DEL CENSO REGISTRADO</td>
-                <td colspan="3" style="border: 1px solid #BFBFBF;">${document.getElementById('total_m_censo').innerText}</td>
-                <td colspan="3" style="border: 1px solid #BFBFBF;">${document.getElementById('total_h_censo').innerText}</td>
-                <td colspan="3" style="background-color: #C6E0B4; border: 1px solid #BFBFBF;">${document.getElementById('total_global_censo').innerText}</td>
-            </tr>
-            <tr><td colspan="16" style="height: 15px; border: none;"></td></tr>
-
-            <tr><th colspan="16" style="background-color: #D9E1F2; color: #1F4E78; font-weight: bold; text-align: left; font-size: 11pt; height: 25px;">3. COMPILACIÓN OPERATIVA DE RUTAS DE BUSES EN TERMINAL</th></tr>
-            <tr style="background-color: #F2F2F2; font-weight: bold; text-align: center; font-size: 10pt;">
-                <td style="border: 1px solid #BFBFBF;">ID_FICHA</td>
-                <td colspan="6" style="border: 1px solid #BFBFBF;">Ruta de Buses e Identificación Operativa</td>
-                <td colspan="3" style="border: 1px solid #BFBFBF;">Cantidad Motoristas</td>
-                <td colspan="3" style="border: 1px solid #BFBFBF;">Cantidad Cobradores</td>
-                <td colspan="3" style="background-color: #E2EFDA; border: 1px solid #BFBFBF;">Total Personal Asignado</td>
-            </tr>
-        `;
-
-        for (let i = 1; i <= 3; i++) {
-            let r_nom = document.getElementById(`r${i}_id`).value || `Línea de Ruta Opcional ${i}`;
-            let r_mot = document.getElementById(`r${i}_mot`).value || '0';
-            let r_cob = document.getElementById(`r${i}_cob`).value || '0';
-            let r_tot = document.getElementById(`r${i}_tot`).innerText;
-            excelStructure += `
-            <tr style="text-align: center; font-size: 10pt;">
-                <td style="border: 1px solid #BFBFBF; background-color: #F2F2F2;">1</td>
-                <td colspan="6" style="border: 1px solid #BFBFBF; text-align: left; background-color: #FFF2CC;">${r_nom}</td>
-                <td colspan="3" style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${r_mot}</td>
-                <td colspan="3" style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${r_cob}</td>
-                <td colspan="3" style="border: 1px solid #BFBFBF; background-color: #E2EFDA; font-weight: bold;">${r_tot}</td>
-            </tr>`;
-        }
-
-        excelStructure += `
-            <tr><td colspan="16" style="height: 15px; border: none;"></td></tr>
-
-            <tr><th colspan="16" style="background-color: #D9E1F2; color: #1F4E78; font-weight: bold; text-align: left; font-size: 11pt; height: 25px;">4. INDICADORES DE CONVIVENCIA, SEGURIDAD, ENTORNO SOCIAL Y VARIABLES DE GÉNERO</th></tr>
-            <tr style="background-color: #F2F2F2; font-weight: bold; font-size: 9.5pt; text-align: center;">
-                <td style="border: 1px solid #BFBFBF;">ID</td>
-                <td colspan="2" style="border: 1px solid #BFBFBF;">RELACION_EMPRESARIOS_ADMIN</td>
-                <td colspan="2" style="border: 1px solid #BFBFBF;">DIRECTIVAS_COMITES_SINDICATOS</td>
-                <td colspan="1" style="border: 1px solid #BFBFBF;">IGLESIAS_ENTORNO</td>
-                <td colspan="1" style="border: 1px solid #BFBFBF;">BOTADEROS_CRITICOS</td>
-                <td colspan="1" style="border: 1px solid #BFBFBF;">PREVALENCIA_ROBO_HURTO</td>
-                <td colspan="1" style="border: 1px solid #BFBFBF;">PATRULLAJE_CAM</td>
-                <td colspan="1" style="border: 1px solid #BFBFBF;">ARTICULACION_PNC</td>
-                <td colspan="1" style="border: 1px solid #BFBFBF;">PANDILLAS_REMANENTES</td>
-                <td colspan="1" style="border: 1px solid #BFBFBF;">JEFAS_HOGAR_ESTIMACION</td>
-                <td colspan="1" style="border: 1px solid #BFBFBF;">PRESENCIA_NNA_PUESTOS</td>
-                <td colspan="1" style="border: 1px solid #BFBFBF;">RUTA_DERIVACION_VBG</td>
-                <td colspan="2" style="border: 1px solid #BFBFBF;">CONTRABANDO_CIGARRILLOS</td>
-            </tr>
-            <tr style="font-size: 9.5pt; vertical-align: top; text-align: center;">
-                <td style="border: 1px solid #BFBFBF; font-weight: bold; background-color: #F2F2F2;">1</td>
-                <td colspan="2" style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${emp_rel}</td>
-                <td colspan="2" style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${dir_com}</td>
-                <td colspan="1" style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${iglesias}</td>
-                <td colspan="1" style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${botaderos}</td>
-                <td colspan="1" style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${robo}</td>
-                <td colspan="1" style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${cam}</td>
-                <td colspan="1" style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${pnc}</td>
-                <td colspan="1" style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${pandillas}</td>
-                <td colspan="1" style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${jefas}</td>
-                <td colspan="1" style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${nna}</td>
-                <td colspan="1" style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${ruta}</td>
-                <td colspan="2" style="border: 1px solid #BFBFBF; background-color: #FFF2CC;">${cigarros}</td>
-            </tr>
-            <tr style="background-color: #F2F2F2; font-weight: bold; font-size: 10pt;">
-                <td style="border: 1px solid #BFBFBF; text-align: center;">ID</td>
-                <td colspan="15" style="border: 1px solid #BFBFBF; text-align: left;">ANALISIS_CUALITATIVO_ENTORNO_DELICTIVO_Y_CONVIVENCIA</td>
-            </tr>
-            <tr style="font-size: 10pt;">
-                <td style="border: 1px solid #BFBFBF; text-align: center; font-weight: bold; background-color: #F2F2F2;">1</td>
-                <td colspan="15" style="border: 1px solid #BFBFBF; background-color: #FFF2CC; text-align: left; height: 45px; vertical-align: top;">${cualitativo}</td>
-            </tr>
-        </table>`;
-
-        // Exportación segura de datos utilizando un objeto Blob con codificación UTF-8
-        let blob = new Blob(['\ufeff' + excelStructure], {
-            type: 'application/vnd.ms-excel;charset=utf-8'
-        });
-        let url = URL.createObjectURL(blob);
-        let linkDescarga = document.createElement('a');
-        linkDescarga.href = url;
-        linkDescarga.download = 'Matriz_Consolidada_Mercados_2026.xls';
-        document.body.appendChild(linkDescarga);
-        linkDescarga.click();
-        document.body.removeChild(linkDescarga);
-    }
-</script>
-
-</body>
-</html>
+            document.getElementById('analysis_text').innerHTML = "<i>Ingrese datos numéricos en las pestañas de \"Censo\" y \"Rutas\"
