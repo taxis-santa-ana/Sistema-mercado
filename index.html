@@ -3,673 +3,672 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema Profesional de Captura - Mercados 2026</title>
+    <title>Sistema Integrado de Monitoreo Territorial - ASAPROSAR</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-            background-color: #f1f5f9;
-            color: #1e293b;
-            margin: 0;
-            padding: 25px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        }
-        h1 {
-            color: #1f4e78;
-            text-align: center;
-            margin-bottom: 5px;
-            font-size: 24pt;
-            font-weight: 700;
-        }
-        .subtitle {
-            text-align: center;
-            color: #64748b;
-            margin-bottom: 35px;
-            font-size: 11pt;
-            font-style: italic;
-        }
-        
-        /* SISTEMA DE PESTAÑAS (TABS) */
-        .tabs-menu {
-            display: flex;
-            background-color: #e2e8f0;
-            padding: 6px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            gap: 4px;
-        }
-        .tab-btn {
-            flex: 1;
-            padding: 12px 10px;
-            border: none;
-            background: none;
-            color: #475569;
-            font-weight: 600;
-            font-size: 10pt;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-            text-align: center;
-            text-transform: uppercase;
-        }
-        .tab-btn:hover {
-            background-color: rgba(255, 255, 255, 0.5);
-            color: #1f4e78;
-        }
-        .tab-btn.active {
-            background-color: #ffffff;
-            color: #1f4e78;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-        
-        /* CONTENEDORES DE CONTENIDO DE PESTAÑA */
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .section-header {
-            background-color: #d9e1f2;
-            color: #1f4e78;
-            padding: 14px 18px;
-            font-weight: bold;
-            font-size: 12pt;
-            border-left: 6px solid #1f4e78;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            border-radius: 0 6px 6px 0;
-        }
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-        }
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-        .form-group.full-width {
-            grid-column: span 2;
-        }
-        label {
-            font-size: 10pt;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #334155;
-        }
-        input[type="text"], input[type="number"], select, textarea {
-            padding: 12px 14px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            background-color: #fff2cc;
-            font-size: 10pt;
-            color: #1e293b;
-            box-sizing: border-box;
-            transition: all 0.2s;
-        }
-        input:focus, select:focus, textarea:focus {
-            background-color: #ffffff;
-            border-color: #1f4e78;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(31,78,120,0.15);
-        }
-        .checkbox-group {
-            display: flex;
-            gap: 25px;
-            margin-top: 5px;
-            background: #f8fafc;
-            padding: 12px;
-            border-radius: 6px;
-            border: 1px solid #e2e8f0;
-        }
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            font-size: 10pt;
-            font-weight: 500;
-            color: #475569;
-        }
-        .checkbox-item input {
-            margin-right: 10px;
-            transform: scale(1.2);
-            cursor: pointer;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 5px;
-            margin-bottom: 25px;
-            background: #ffffff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-        th, td {
-            border: 1px solid #e2e8f0;
-            padding: 12px 14px;
-            font-size: 10pt;
-        }
-        th {
-            background-color: #f8fafc;
-            color: #1f4e78;
-            font-weight: 700;
-            text-align: center;
-        }
-        .txt-center { text-align: center; }
-        .table-input {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #cbd5e1;
-            border-radius: 4px;
-            background-color: #fff2cc;
-            text-align: center;
-            font-size: 10pt;
-            box-sizing: border-box;
-        }
-        .row-total {
-            background-color: #e2efda;
-            font-weight: bold;
-            text-align: center;
-            color: #276749;
-        }
-        .btn-box {
-            text-align: center;
-            margin-top: 35px;
-            padding-top: 25px;
-            border-top: 1px solid #e2e8f0;
-        }
-        .btn-submit {
-            background-color: #1e3a8a;
-            color: #ffffff;
-            padding: 16px 45px;
-            font-size: 12pt;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.25);
-            transition: all 0.2s ease;
-        }
-        .btn-submit:hover {
-            background-color: #172554;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(30, 58, 138, 0.35);
-        }
-
-        /* DISEÑO PANEL DE ANÁLISIS AUTOMÁTICO */
-        .dashboard-box {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            padding: 25px;
-            border-radius: 10px;
-            margin-top: 5px;
-        }
-        .chart-container {
-            background: white;
-            border: 1px solid #e2e8f0;
-            padding: 20px;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-            height: 280px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-        }
-        .chart-bars {
-            display: flex;
-            align-items: flex-end;
-            gap: 35px;
-            width: 100%;
-            height: 220px;
-            border-bottom: 2px solid #94a3b8;
-            padding-bottom: 5px;
-            justify-content: center;
-        }
-        .bar-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 70px;
-        }
-        .bar {
-            width: 100%;
-            background-color: #3b82f6;
-            border-radius: 6px 6px 0 0;
-            transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            color: white;
-            font-size: 9.5pt;
-            font-weight: bold;
-            padding-top: 6px;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-        }
-        .bar.women { background-color: #ec4899; box-shadow: 0 4px 6px rgba(236,72,153,0.2); }
-        .bar.men { background-color: #0284c7; box-shadow: 0 4px 6px rgba(2,132,199,0.2); }
-        .bar.drivers { background-color: #f59e0b; box-shadow: 0 4px 6px rgba(245,158,11,0.2); }
-        .bar.collectors { background-color: #10b981; box-shadow: 0 4px 6px rgba(16,185,129,0.2); }
-        
-        .bar-label {
-            font-size: 9pt;
-            font-weight: 600;
-            color: #64748b;
-            margin-top: 10px;
-            text-align: center;
-            line-height: 1.2;
-        }
-        .analysis-text-box {
-            background: white;
-            border: 1px solid #e2e8f0;
-            padding: 25px;
-            border-radius: 8px;
-            font-size: 10.5pt;
-            line-height: 1.7;
-            color: #334155;
-            overflow-y: auto;
-            height: 250px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab-btn.active { border-bottom-color: #0284c7; color: #0284c7; font-weight: 700; background-color: #f8fafc; }
     </style>
 </head>
-<body>
+<body class="bg-slate-100 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
 
-<div class="container">
-    <h1>SISTEMA DE INGRESO Y EXPORTACIÓN DE MATRICES COMUNITARIAS 2026</h1>
-    <div class="subtitle">Formulario Dinámico de Registro y Generador Automático de Base de Datos en Excel (.XLS)</div>
-
-    <div class="tabs-menu">
-        <button class="tab-btn active" onclick="cambiarPestana(event, 'tab1')">1. Identificación</button>
-        <button class="tab-btn" onclick="cambiarPestana(event, 'tab2')">2. Censo Vendedores</button>
-        <button class="tab-btn" onclick="cambiarPestana(event, 'tab3')">3. Rutas y Transporte</button>
-        <button class="tab-btn" onclick="cambiarPestana(event, 'tab4')">4. Entorno y Seguridad</button>
-        <button class="tab-btn" onclick="cambiarPestana(event, 'tab5')">📊 Dashboard y Análisis</button>
-    </div>
-
-    <div id="tab1" class="tab-content active">
-        <div class="section-header">1. Registro de Identificación General del Establecimiento</div>
-        <div class="form-grid">
-            <div class="form-group">
-                <label>Nombre del Mercado Base:</label>
-                <input type="text" id="mercado_nombre" oninput="actualizarCálculos()" placeholder="Ej. Mercado Central de Santa Ana">
-            </div>
-            <div class="form-group">
-                <label>Departamento:</label>
-                <input type="text" id="departamento" placeholder="Ej. Santa Ana">
-            </div>
-            <div class="form-group">
-                <label>Sector / Zona de Intervención:</label>
-                <input type="text" id="sector" placeholder="Ej. Sector Terminal Terrestre">
-            </div>
-            <div class="form-group">
-                <label>Nombre del Administrador/a de Turno:</label>
-                <input type="text" id="admin_nombre" placeholder="Nombre completo de la jefatura">
-            </div>
-            <div class="form-group">
-                <label>Número Telefónico de Contacto:</label>
-                <input type="text" id="contacto_num" placeholder="Ej. 2440-XXXX">
-            </div>
-            <div class="form-group">
-                <label>Nombre conocido de la Terminal de Buses:</label>
-                <input type="text" id="terminal_nombre" value="Terminal Lara Pineda">
-            </div>
-            <div class="form-group">
-                <label>Nombre común con el que se conoce el Mercado:</label>
-                <input type="text" id="mercado_conocido" placeholder="Ej. Mercado Lara Pineda">
-            </div>
-            <div class="form-group">
-                <label>Ubicación Local / Dirección de la Terminal:</label>
-                <input type="text" id="ubicacion_local" placeholder="Dirección geográfica exacta">
-            </div>
-            <div class="form-group">
-                <label>N° de empleados municipales asignados:</label>
-                <input type="number" id="empleados_cant" placeholder="Total de personal">
-            </div>
-            <div class="form-group">
-                <label>Puestos / Cargos que ocupan en el sector:</label>
-                <input type="text" id="empleados_puestos" placeholder="Ej. CAM, Colectores, Inspectores, Aseo">
-            </div>
-            <div class="form-group full-width">
-                <label>Servicios Básicos Operativos con los que cuenta la infraestructura:</label>
-                <div class="checkbox-group">
-                    <label class="checkbox-item"><input type="checkbox" id="srv_luz"> Luz Eléctrica</label>
-                    <label class="checkbox-item"><input type="checkbox" id="srv_agua"> Agua Potable</label>
-                    <label class="checkbox-item"><input type="checkbox" id="srv_sanitarios"> Servicios Sanitarios Internos</label>
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-sky-600 text-white p-2.5 rounded-xl shadow-md">
+                    <i class="fa-solid fa-folder-tree text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-slate-900 tracking-tight">SI-ASAPROSAR</h1>
+                    <p class="text-xs text-slate-500 font-semibold">Programa Ángeles Descalzos / Academia de Empoderamiento de Niñas</p>
                 </div>
             </div>
+            <div class="text-right font-mono text-xs bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg text-slate-600">
+                Data Center: Registro Local Territorios
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto w-full px-4 pt-6">
+        <div class="border-b border-slate-200 bg-white rounded-t-xl flex flex-wrap shadow-xs p-1 gap-1">
+            <button onclick="cambiarPestana('comunitaria')" id="btn-comunitaria" class="tab-btn active flex items-center gap-2 py-3 px-5 text-sm font-medium text-slate-600 border-b-2 border-transparent hover:text-slate-900 transition-all cursor-pointer rounded-t-lg">
+                <i class="fa-solid fa-users text-sky-600"></i> 1. Ficha Comunitaria Completa
+            </button>
+            <button onclick="cambiarPestana('actores')" id="btn-actores" class="tab-btn flex items-center gap-2 py-3 px-5 text-sm font-medium text-slate-600 border-b-2 border-transparent hover:text-slate-900 transition-all cursor-pointer rounded-t-lg">
+                <i class="fa-solid fa-sitemap text-amber-600"></i> 2. Ficha Recolección Información Actores
+            </button>
         </div>
     </div>
 
-    <div id="tab2" class="tab-content">
-        <div class="section-header">2. Censo Demográfico Poblacional de Vendedores del Entorno</div>
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 45%;">Clasificación Operativa del Sector Ventas</th>
-                    <th style="width: 15%;">Mujeres (M)</th>
-                    <th style="width: 15%;">Hombres (H)</th>
-                    <th style="width: 25%; background-color: #e2efda;">Total Calculado</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Arrendatarios con legalidad de contrato</td>
-                    <td class="txt-center"><input type="number" id="c1_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td class="txt-center"><input type="number" id="c1_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td id="c1_t" class="row-total">0</td>
-                </tr>
-                <tr>
-                    <td>Arrendatarios con licencia</td>
-                    <td class="txt-center"><input type="number" id="c2_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td class="txt-center"><input type="number" id="c2_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td id="c2_t" class="row-total">0</td>
-                </tr>
-                <tr>
-                    <td>Arrendatarios de locales fijos</td>
-                    <td class="txt-center"><input type="number" id="c3_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td class="txt-center"><input type="number" id="c3_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td id="c3_t" class="row-total">0</td>
-                </tr>
-                <tr>
-                    <td>Arrendatarios eventuales</td>
-                    <td class="txt-center"><input type="number" id="c4_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td class="txt-center"><input type="number" id="c4_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td id="c4_t" class="row-total">0</td>
-                </tr>
-                <tr>
-                    <td>Arrendatarios de áreas de chatarreras</td>
-                    <td class="txt-center"><input type="number" id="c5_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td class="txt-center"><input type="number" id="c5_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td id="c5_t" class="row-total">0</td>
-                </tr>
-                <tr>
-                    <td>Arrendatarios Mayoristas / Distribuidores</td>
-                    <td class="txt-center"><input type="number" id="c6_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td class="txt-center"><input type="number" id="c6_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td id="c6_t" class="row-total">0</td>
-                </tr>
-                <tr>
-                    <td>Vendedoras/es ambulantes e informales</td>
-                    <td class="txt-center"><input type="number" id="c7_m" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td class="txt-center"><input type="number" id="c7_h" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td id="c7_t" class="row-total">0</td>
-                </tr>
-                <tr style="background-color: #d9e1f2; font-weight: bold;">
-                    <td>TOTAL CONSOLIDADO CENSO VENDEDORES</td>
-                    <td id="total_m_censo" class="txt-center">0</td>
-                    <td id="total_h_censo" class="txt-center">0</td>
-                    <td id="total_global_censo" style="background-color: #c6e0b4; text-align: center; color: #1e4620;">0</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div id="tab3" class="tab-content">
-        <div class="section-header">3. Monitoreo de Rutas de Autobuses y Personal de Terminal</div>
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 45%;">Identificación de la Ruta de Transporte</th>
-                    <th style="width: 20%;">N° de Motoristas Registrados</th>
-                    <th style="width: 20%;">N° de Cobradores Registrados</th>
-                    <th style="width: 15%; background-color: #e2efda;">Total de Personal</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="text" id="r1_id" class="table-input" style="text-align: left;" placeholder="Ej. Ruta 210 (Santa Ana - Ahuachapán)"></td>
-                    <td><input type="number" id="r1_mot" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td><input type="number" id="r1_cob" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td id="r1_tot" class="row-total">0</td>
-                </tr>
-                <tr>
-                    <td><input type="text" id="r2_id" class="table-input" style="text-align: left;" placeholder="Ej. Ruta Interdepartamental Directa"></td>
-                    <td><input type="number" id="r2_mot" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td><input type="number" id="r2_cob" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td id="r2_tot" class="row-total">0</td>
-                </tr>
-                <tr>
-                    <td><input type="text" id="r3_id" class="table-input" style="text-align: left;" placeholder="Ruta Adicional Local u Ordinaria"></td>
-                    <td><input type="number" id="r3_mot" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td><input type="number" id="r3_cob" class="table-input" value="0" oninput="actualizarCálculos()"></td>
-                    <td id="r3_tot" class="row-total">0</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div id="tab4" class="tab-content">
-        <div class="section-header">4. Convivencia, Percepción de Riesgos e Incidencias en Seguridad</div>
-        <div class="form-grid">
-            <div class="form-group">
-                <label>Relación general de empresarios/transportistas con la administración:</label>
-                <select id="empresarios_rel" onchange="actualizarCálculos()">
-                    <option value="Favorable y fluida con mesas de trabajo activas">Favorable y fluida con mesas de trabajo activas</option>
-                    <option value="Intermitente o coordinada solo ante crisis">Intermitente o coordinada solo ante crisis</option>
-                    <option value="Tensa con desacuerdos en cánones o parqueos">Tensa con desacuerdos en cánones o parqueos</option>
-                    <option value="Nula o sin canales formales de diálogo">Nula o sin canales formales de diálogo</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Presencia de directivas, comités o sindicatos en el sector:</label>
-                <input type="text" id="directivas_comites" placeholder="Ej. Sindicato Unificado de Vendedores de la Terminal, Junta de Transportistas">
-            </div>
-            <div class="form-group">
-                <label>Iglesias vigentes detectadas en el entorno periférico:</label>
-                <input type="text" id="iglesias_data" placeholder="Nombres de templos o misiones identificadas">
-            </div>
-            <div class="form-group">
-                <label>N° de botaderos o focos críticos de acumulación de basura:</label>
-                <input type="text" id="botaderos_cant" placeholder="Ej. 2 puntos críticos internos, 1 contenedor principal periférico">
-            </div>
-            <div class="form-group">
-                <label>Prevalencia de Robos o Hurtos a usuarios y mercaderías:</label>
-                <select id="inc_robo" onchange="actualizarCálculos()">
-                    <option value="Baja (Raras veces al año)">Baja (Raras veces al año)</option>
-                    <option value="Media (Ocurrencia mensual focalizada)">Media (Ocurrencia mensual focalizada)</option>
-                    <option value="Alta (Reportes semanales constantes)">Alta (Reportes semanales constantes)</option>
-                    <option value="Nunca se registran incidencias">Nunca se registran incidencias</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Frecuencia Operativa de Patrullaje del Cuerpo de Agentes Municipales (CAM):</label>
-                <select id="cam_frecuencia">
-                    <option value="Continua durante todo el turno operativo">Continua durante todo el turno operativo</option>
-                    <option value="Establecida en 1 o 2 recorridos programados por turno">Establecida en 1 o 2 recorridos programados por turno</option>
-                    <option value="Únicamente bajo requerimiento o llamado administrativo de emergencia">Únicamente bajo requerimiento o llamado administrativo de emergencia</option>
-                    <option value="No se registra presencia del CAM en el perímetro">No se registra presencia del CAM en el perímetro</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Articulación institucional con la Policía Nacional Civil (PNC):</label>
-                <select id="pnc_articulacion">
-                    <option value="SI - Coordinación estrecha y patrullajes combinados periódicos">SI - Coordinación estrecha y patrullajes combinados</option>
-                    <option value="NO - Operación de seguridad municipal aislada o reactiva">NO - Operación de seguridad municipal aislada o reactiva</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Estado de Control Territorial Actual / Actividad de Pandillas (Remanentes):</label>
-                <select id="pandillas_estado" onchange="actualizarCálculos()">
-                    <option value="Cese visible de funciones y desarticulación territorial evidente">Cese visible de funciones y desarticulación evidente</option>
-                    <option value="Mutación interna (Dinámicas de control ocultas o latentes sin visibilidad pública)">Mutación interna (Dinámicas ocultas)</option>
-                    <option value="Presencia residual esporádica (Células desorganizadas aisladas)">Presencia residual esporádica (Células aisladas)</option>
-                    <option value="Sin indicios ni reportes de operatividad en la zona">Sin indicios ni reportes de operatividad en la zona</option>
-                </select>
-            </div>
-            <div class="form-group full-width">
-                <label>Análisis Cualitativo del Entorno Delictivo Actual (Dinámicas de campo y convivencia):</label>
-                <textarea id="analisis_cualitativo" oninput="actualizarCálculos()" rows="3" placeholder="Describa la realidad observada..."></textarea>
-            </div>
-        </div>
-
-        <div style="margin-top: 35px;" class="section-header">5. Indicadores Socioeconómicos de Vulnerabilidad de Género y Productos No Regulados</div>
-        <div class="form-grid">
-            <div class="form-group">
-                <label>Proporción estimada de vendedoras Jefas de Hogar:</label>
-                <select id="jefas_hogar">
-                    <option value="Predominante (Más del 75% del censo femenino)">Predominante (Más del 75%)</option>
-                    <option value="Alta (Entre el 50% y el 75% de las vendedoras)">Alta (Entre el 50% y el 75%)</option>
-                    <option value="Moderada (Entre el 25% y el 50% de los locales)">Moderada (Entre el 25% y el 50%)</option>
-                    <option value="Baja (Menos del 25% del total de puestos)">Baja (Menos del 25%)</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Presencia de Niños, Niñas y Adolescentes (NNA) en los locales:</label>
-                <select id="nna_presencia">
-                    <option value="Alta (Permanencia diaria acompañando las actividades comerciales)">Alta (Permanencia diaria en puestos)</option>
-                    <option value="Media (Acompañamiento recurrente solo en jornadas vespertinas o fines de semana)">Media (Tardes o fines de semana)</option>
-                    <option value="Baja / Nula (Los menores asisten a centros escolares o guarderías externas)">Baja / Nula presencia en andenes</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Ruta formalizada de derivación activa (ISDEMU / UNIMUJER):</label>
-                <select id="ruta_derivacion">
-                    <option value="SI - Protocolo institucional implementado y conocido por administración">SI - Protocolo de enlace activo</option>
-                    <option value="NO - Carencia de mecanismos oficiales directos en la terminal">NO - Sin mecanismos oficiales directos</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Comercialización detectada de Cigarrillos de Contrabando:</label>
-                <select id="contrabando_cigarrillos">
-                    <option value="Presencia Alta (Exhibición y venta abierta en canastos/periferia)">Presencia Alta (Venta abierta visible)</option>
-                    <option value="Presencia Moderada (Distribución discreta o bajo demanda específica)">Presencia Moderada (Distribución discreta)</option>
-                    <option value="Presencia Inexistente o sin registros actuales en la terminal">Presencia Inexistente o sin registros</option>
-                </select>
-            </div>
-        </div>
-
-        <div style="margin-top: 35px;" class="section-header">6. Validación del Levantamiento de Información</div>
-        <div class="form-grid">
-            <div class="form-group">
-                <label>Nombre del Evaluador / Responsable Técnico:</label>
-                <input type="text" id="responsable_tecnico" placeholder="Nombre completo del recopilador">
-            </div>
-            <div class="form-group">
-                <label>Fecha de Validación de los Datos:</label>
-                <input type="text" id="fecha_validacion" value="13 / 06 / 2026" style="text-align: center;">
-            </div>
-        </div>
-    </div>
-
-    <div id="tab5" class="tab-content">
-        <div class="section-header">Panel de Análisis Estadístico y Diagnóstico Automático en Tiempo Real</div>
-        <div class="dashboard-box">
-            <div class="chart-container">
-                <div class="chart-bars">
-                    <div class="bar-wrapper">
-                        <div id="bar_women" class="bar women" style="height: 0%;">0</div>
-                        <div class="bar-label">Mujeres<br>(Censo)</div>
+    <main class="max-w-7xl mx-auto w-full px-4 pb-12 flex-1">
+        
+        <div id="tab-comunitaria" class="tab-content active mt-4">
+            <form id="form-comunitaria" onsubmit="event.preventDefault(); generarAnalisisComunitario();" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+                        <h2 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-2 flex items-center gap-2">
+                            <span class="w-1 h-4 bg-sky-600 rounded-xs"></span> I. Ubicación Geográfica y Datos Generales
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 mb-1">Nombre de la comunidad, caserío o colonia</label>
+                                <input type="text" id="c_comunidad" required class="w-full text-sm px-3 py-2 border border-slate-200 rounded-lg bg-slate-50 focus:bg-white focus:border-sky-500 outline-none transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 mb-1">Caserío o Sector</label>
+                                <input type="text" id="c_caserio" class="w-full text-sm px-3 py-2 border border-slate-200 rounded-lg bg-slate-50 focus:bg-white outline-none">
+                            </div>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-600 mb-1">Departamento</label>
+                                    <input type="text" id="c_depto" value="Santa Ana" class="w-full text-sm px-3 py-2 border border-slate-200 rounded-lg bg-slate-50 focus:bg-white outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-600 mb-1">Municipio</label>
+                                    <input type="text" id="c_muni" class="w-full text-sm px-3 py-2 border border-slate-200 rounded-lg bg-slate-50 focus:bg-white outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-600 mb-1">Distrito</label>
+                                    <input type="text" id="c_distrito" class="w-full text-sm px-3 py-2 border border-slate-200 rounded-lg bg-slate-50 focus:bg-white outline-none">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-600 mb-1">N° Familias</label>
+                                    <input type="number" id="c_familias" min="0" class="w-full text-sm px-3 py-2 border border-slate-200 rounded-lg bg-slate-50 focus:bg-white outline-none">
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="block text-xs font-bold text-slate-600 mb-1">Organizaciones que apoyan</label>
+                                    <input type="text" id="c_org_apoyan" class="w-full text-sm px-3 py-2 border border-slate-200 rounded-lg bg-slate-50 focus:bg-white outline-none" placeholder="Separadas por comas">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">¿Conocen si hay migración de las familias al exterior o por violencia? ¿Razones?</label>
+                            <textarea id="c_migracion_razones" rows="2" class="w-full text-sm px-3 py-2 border border-slate-200 rounded-lg bg-slate-50 focus:bg-white outline-none resize-none"></textarea>
+                        </div>
                     </div>
-                    <div class="bar-wrapper">
-                        <div id="bar_men" class="bar men" style="height: 0%;">0</div>
-                        <div class="bar-label">Hombres<br>(Censo)</div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+                        <h2 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-2 flex items-center gap-2">
+                            <span class="w-1 h-4 bg-sky-600 rounded-xs"></span> Cuadro de Población (Cálculo Exacto)
+                        </h2>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-50 text-slate-700 uppercase font-bold border-b border-slate-200">
+                                        <th class="p-3">Rango Edades</th>
+                                        <th class="p-3" colspan="2">Mujeres (N° y %)</th>
+                                        <th class="p-3" colspan="2">Hombres (N° y %)</th>
+                                        <th class="p-3" colspan="2">Total Rango</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-poblacion" class="divide-y divide-slate-100 font-medium">
+                                    <script>
+                                        const rangos = ["0-6", "7-15", "16-25", "26-40", "40-50", "50-mas"];
+                                        const etiquetas = ["0 a 6 años", "7 a 15 años", "16 a 25 años", "26 a 40 años", "40 a 50 años", "50 a más años"];
+                                        rangos.forEach((r, idx) => {
+                                            document.write(`
+                                                <tr data-rango="${r}">
+                                                    <td class="p-3 text-slate-900 font-semibold">${etiquetas[idx]}</td>
+                                                    <td class="p-1 w-24"><input type="number" min="0" value="0" oninput="calcularPoblacionComunidad()" class="w-full px-2 py-1 border border-slate-200 rounded-md input-f"></td>
+                                                    <td class="p-3 text-slate-500 pct-f">0.0%</td>
+                                                    <td class="p-1 w-24"><input type="number" min="0" value="0" oninput="calcularPoblacionComunidad()" class="w-full px-2 py-1 border border-slate-200 rounded-md input-m"></td>
+                                                    <td class="p-3 text-slate-500 pct-m">0.0%</td>
+                                                    <td class="p-3 text-slate-900 font-bold tot-rango">0</td>
+                                                    <td class="p-3 text-slate-500 pct-rango">0.0%</td>
+                                                </tr>
+                                            `);
+                                        });
+                                    </script>
+                                    <tr class="bg-slate-900 text-white font-bold">
+                                        <td class="p-3">TOTAL</td>
+                                        <td class="p-3" id="c_tot_f_n">0</td>
+                                        <td class="p-3 text-slate-300" id="c_tot_f_p">0.0%</td>
+                                        <td class="p-3" id="c_tot_m_n">0</td>
+                                        <td class="p-3 text-slate-300" id="c_tot_m_p">0.0%</td>
+                                        <td class="p-3 text-amber-400" id="c_tot_global_n">0</td>
+                                        <td class="p-3 text-amber-300">100%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="bar-wrapper">
-                        <div id="bar_drivers" class="bar drivers" style="height: 0%;">0</div>
-                        <div class="bar-label">Motoristas<br>(Rutas)</div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+                        <h2 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-2 flex items-center gap-2">
+                            <span class="w-1 h-4 bg-sky-600 rounded-xs"></span> III. Organización Comunitaria y Representantes
+                        </h2>
+                        <div class="space-y-3 text-xs">
+                            <div>
+                                <label class="block font-bold text-slate-600 mb-1">¿Cómo está organizada la comunidad?</label>
+                                <input type="text" id="c_como_org" class="w-full px-3 py-2 border border-slate-200 rounded-lg bg-slate-50 outline-none">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-600 mb-1">¿Principales problemas de organización?</label>
+                                <textarea id="c_problemas_org" rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-lg bg-slate-50 outline-none resize-none"></textarea>
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-600 mb-1">¿Sugerencias para superar los problemas?</label>
+                                <textarea id="c_sugerencias_org" rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-lg bg-slate-50 outline-none resize-none"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="pt-2">
+                            <label class="block text-xs font-bold text-slate-700 mb-2">Identificación de Representantes (Hasta 10):</label>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-xs border-collapse">
+                                    <thead>
+                                        <tr class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                                            <th class="p-2 w-8">N°</th>
+                                            <th class="p-2">Nombre del Representante</th>
+                                            <th class="p-2 w-16">Edad</th>
+                                            <th class="p-2">Cargo</th>
+                                            <th class="p-2">Organización</th>
+                                            <th class="p-2 w-28">Teléfono</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        <script>
+                                            for(let i=1; i<=10; i++) {
+                                                document.write(`
+                                                    <tr class="rep-row">
+                                                        <td class="p-2 text-center font-bold text-slate-400">${i}</td>
+                                                        <td class="p-1"><input type="text" class="w-full text-xs px-2 py-1 border border-slate-200 rounded-md r-nombre"></td>
+                                                        <td class="p-1"><input type="number" class="w-full text-xs px-2 py-1 border border-slate-200 rounded-md r-edad"></td>
+                                                        <td class="p-1"><input type="text" class="w-full text-xs px-2 py-1 border border-slate-200 rounded-md r-cargo"></td>
+                                                        <td class="p-1"><input type="text" class="w-full text-xs px-2 py-1 border border-slate-200 rounded-md r-org"></td>
+                                                        <td class="p-1"><input type="text" class="w-full text-xs px-2 py-1 border border-slate-200 rounded-md r-tel"></td>
+                                                    </tr>
+                                                `);
+                                            }
+                                        </script>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                    <div class="bar-wrapper">
-                        <div id="bar_collectors" class="bar collectors" style="height: 0%;">0</div>
-                        <div class="bar-label">Cobradores<br>(Rutas)</div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+                        <h2 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-2 flex items-center gap-2">
+                            <span class="w-1 h-4 bg-sky-600 rounded-xs"></span> IV. Infraestructura Educativa y Matrícula
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                            <div class="md:col-span-2">
+                                <label class="block font-bold text-slate-600 mb-1">Nombre del Centro Escolar</label>
+                                <input type="text" id="c_ce_nombre" class="w-full p-2 border border-slate-200 bg-slate-50 rounded-md">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-600 mb-1">Código de Institución</label>
+                                <input type="text" id="c_ce_codigo" class="w-full p-2 border border-slate-200 bg-slate-50 rounded-md">
+                            </div>
+                        </div>
+
+                        <div class="overflow-y-auto max-h-60 border border-slate-200 rounded-xl">
+                            <table class="w-full text-left text-xs border-collapse" id="tabla-grados-estudio">
+                                <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200 sticky top-0">
+                                    <tr>
+                                        <th class="p-2">Grado Académico</th>
+                                        <th class="p-2 w-20">Niñas</th>
+                                        <th class="p-2 w-20">Niños</th>
+                                        <th class="p-2 w-20">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                    <script>
+                                        const grs = ["Parvularia 4", "Parvularia 5", "Parvularia 6", "Primero", "Segundo", "Tercero", "Cuarto", "Quinto", "Sexto", "Séptimo", "Octavo", "Noveno", "1er Año Bachillerato", "2do Año Bachillerato"];
+                                        grs.forEach(g => {
+                                            document.write(`
+                                                <tr data-grado="${g}">
+                                                    <td class="p-2 font-medium text-slate-800">${g}</td>
+                                                    <td class="p-1"><input type="number" min="0" value="0" oninput="calcularMatriculaEscolar()" class="w-full px-1.5 py-0.5 border border-slate-200 rounded-sm g-ninas"></td>
+                                                    <td class="p-1"><input type="number" min="0" value="0" oninput="calcularMatriculaEscolar()" class="w-full px-1.5 py-0.5 border border-slate-200 rounded-sm g-ninos"></td>
+                                                    <td class="p-2 font-bold text-slate-900 g-total">0</td>
+                                                </tr>
+                                            `);
+                                        });
+                                    </script>
+                                    <tr class="bg-slate-900 text-white font-bold sticky bottom-0">
+                                        <td class="p-2">TOTAL MATRÍCULA</td>
+                                        <td class="p-2" id="esc_tot_ninas">0</td>
+                                        <td class="p-2" id="esc_tot_ninos">0</td>
+                                        <td class="p-2 text-amber-400" id="esc_tot_global">0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+                        <h2 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-2 flex items-center gap-2">
+                            <span class="w-1 h-4 bg-sky-600 rounded-xs"></span> V a VIII. Indicadores de Violencia Basada en Género
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Principales Agresores Identificados</label>
+                                <select id="c_vbg_agresor" class="w-full p-2 border border-slate-200 bg-slate-50 rounded-lg">
+                                    <option value="Compañeros del mismo centro (Pares)">Compañeros del mismo centro (Pares)</option>
+                                    <option value="Familiares cercanos">Familiares cercanos</option>
+                                    <option value="Personas de la comunidad">Personas de la comunidad</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Protocolo Escrito (Ley Crecer Juntos)</label>
+                                <select id="c_ce_protocolo" class="w-full p-2 border border-slate-200 bg-slate-50 rounded-lg">
+                                    <option value="Sí, se aplica rigurosamente">Sí, se aplica rigurosamente</option>
+                                    <option value="No contamos con un protocolo formal">No contamos con un protocolo formal</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+                        <h2 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-2 flex items-center gap-2">
+                            <span class="w-1 h-4 bg-sky-600 rounded-xs"></span> IX y X. Monitoreo Sector Salud
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Frecuencia Mensual Confidencias VBG</label>
+                                <select id="c_sal_frecuencia" class="w-full p-2 border border-slate-200 bg-slate-50 rounded-lg">
+                                    <option value="Ninguna">Ninguna</option>
+                                    <option value="De 1 a 3 mujeres">De 1 a 3 mujeres</option>
+                                    <option value="De 4 a 7 mujeres">De 4 a 7 mujeres</option>
+                                    <option value="Más de 7 mujeres">Más de 7 mujeres</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Tipología Detectada más Frecuente</label>
+                                <select id="c_sal_tipo_vbg" class="w-full p-2 border border-slate-200 bg-slate-50 rounded-lg">
+                                    <option value="Violencia Psicológica">Violencia Psicológica</option>
+                                    <option value="Violencia Física">Violencia Física</option>
+                                    <option value="Violencia Sexual">Violencia Sexual</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex flex-wrap gap-4 items-center justify-between text-xs">
+                        <div class="flex-1 min-w-[200px]">
+                            <label class="block font-bold text-slate-500 uppercase text-[10px]">Técnico Evaluador</label>
+                            <input type="text" id="c_tecnico_firma" class="w-full border-b border-slate-200 bg-transparent outline-none py-1">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-500 uppercase text-[10px]">Fecha Control</label>
+                            <input type="date" id="c_fecha_recoleccion" class="border-b border-slate-200 bg-transparent outline-none py-1">
+                        </div>
+                        <button type="submit" class="bg-sky-600 hover:bg-sky-700 text-white font-bold px-5 py-2.5 rounded-lg transition-all cursor-pointer flex items-center gap-2">
+                            <i class="fa-solid fa-chart-line"></i> Procesar Datos Territoriales
+                        </button>
                     </div>
                 </div>
-            </div>
-            <div id="analysis_text" class="analysis-text-box">
-                <i>Ingrese datos numéricos en las pestañas de "Censo" y "Rutas" para activar los motores de análisis automático de campo...</i>
-            </div>
+
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm sticky top-20 space-y-6">
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+                            <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-square-poll-vertical text-sky-600"></i> Análisis Estructural (Ficha 1)
+                            </h3>
+                            <button type="button" onclick="exportarExcelComunitaria()" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1 cursor-pointer">
+                                <i class="fa-solid fa-file-excel"></i> Exportar
+                            </button>
+                        </div>
+                        <div class="relative w-full h-52 bg-slate-50 rounded-xl p-2 border border-dashed border-slate-200 flex items-center justify-center">
+                            <canvas id="chartComunitariaCanvas"></canvas>
+                        </div>
+                        <div class="space-y-2">
+                            <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Observaciones Técnicas</h4>
+                            <div id="analisis-comunitario-txt" class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600 leading-relaxed max-h-60 overflow-y-auto">
+                                <p><i class="fa-solid fa-circle-info text-sky-500"></i> Procese la ficha para desplegar las métricas poblacionales locales y las alertas críticas.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
-    </div>
 
-    <div class="btn-box">
-        <button class="btn-submit" onclick="exportarMatrizConsolidada()">📥 COMPILAR Y DESCARGAR MATRIZ XLS</button>
-    </div>
-</div>
+        <div id="tab-actores" class="tab-content mt-4">
+            <form id="form-actores" onsubmit="event.preventDefault(); generarAnalisisActores();" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+                        <h2 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-2 flex items-center gap-2">
+                            <span class="w-1 h-4 bg-amber-500 rounded-xs"></span> I y II. Datos de Control e Identificación del Actor
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                            <div>
+                                <label class="block font-bold text-slate-600 mb-1">Código de Ficha Actor</label>
+                                <input type="text" id="a_codigo_ficha" class="w-full p-2 border border-slate-200 bg-slate-50 rounded-md">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-600 mb-1">Comunidad / Cantón</label>
+                                <input type="text" id="a_comunidad_ref" class="w-full p-2 border border-slate-200 bg-slate-50 rounded-md">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-600 mb-1">Municipio / Distrito</label>
+                                <input type="text" id="a_municipio" class="w-full p-2 border border-slate-200 bg-slate-50 rounded-md">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                            <div>
+                                <label class="block font-bold text-slate-600 mb-1">Nombre del Actor (Persona u Org.)</label>
+                                <input type="text" id="a_nombre_actor" required class="w-full p-2 border border-slate-200 bg-slate-50 rounded-md">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-600 mb-1">Nombre del Enlace</label>
+                                <input type="text" id="a_enlace_entrevistado" class="w-full p-2 border border-slate-200 bg-slate-50 rounded-md">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                            <div>
+                                <label class="block font-bold text-slate-600 mb-1">Teléfono Directo</label>
+                                <input type="text" id="a_telefono" class="w-full p-2 border border-slate-200 bg-slate-50 rounded-md">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-600 mb-1">Tipo de Actor</label>
+                                <select id="a_tipo_actor" class="w-full p-2 border border-slate-200 bg-slate-50 rounded-lg">
+                                    <option value="Líder Comunitario Natural">Líder Comunitario Natural</option>
+                                    <option value="ADESCO / Comité">ADESCO / Comité</option>
+                                    <option value="Director/a Escolar">Director/a Escolar</option>
+                                    <option value="ONG / Fundación">ONG / Fundación</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-600 mb-1">Estatus Legal</label>
+                                <select id="a_estatus_legal" class="w-full p-2 border border-slate-200 bg-slate-50 rounded-lg">
+                                    <option value="Con Personería Jurídica Vigente">Con Personería Jurídica Vigente</option>
+                                    <option value="Estructura Informal / No regulada">Estructura Informal / No regulada</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                            <div>
+                                <label class="block font-bold text-slate-600 mb-1">Tiempo de operar en comunidad (Años)</label>
+                                <input type="number" id="a_tiempo_operar" min="0" value="0" class="w-full p-2 border border-slate-200 bg-slate-50 rounded-md">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Proyectos con Fondos de Cooperación</label>
+                                <select id="a_fondos_cooperacion" class="w-full p-2 border border-slate-200 bg-slate-50 rounded-lg">
+                                    <option value="NO">No registra fondos externos</option>
+                                    <option value="SI">Sí, posee historial de fondos</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
 
-<script>
-    // Lógica interactiva para cambiar de pestañas sin recargar
-    function cambiarPestana(evt, tabId) {
-        let i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].classList.remove("active");
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+                        <h2 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-2 flex items-center gap-2">
+                            <span class="w-1 h-4 bg-amber-500 rounded-xs"></span> III. Recopilación de Información Primaria y Rol Local
+                        </h2>
+                        <div class="space-y-3 text-xs">
+                            <div>
+                                <label class="block font-bold text-slate-600 mb-1">Acciones o programas que ejecuta diariamente:</label>
+                                <textarea id="a_acciones_diarias" rows="2" class="w-full p-2 border border-slate-200 bg-slate-50 rounded-lg resize-none"></textarea>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block font-bold text-slate-600 mb-1">Población Objetivo Principal</label>
+                                    <select id="a_poblacion_objetivo" class="w-full p-2 border border-slate-200 bg-slate-50 rounded-lg">
+                                        <option value="Primera Infancia/Niñez">Primera Infancia / Niñez</option>
+                                        <option value="Adolescentes">Adolescentes</option>
+                                        <option value="Mujeres">Mujeres</option>
+                                        <option value="Familias">Familias</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-600 mb-1">Volumen de Cobertura Aproximado (N° Personas)</label>
+                                    <input type="number" id="a_cobertura_num" min="0" value="0" class="w-full p-2 border border-slate-200 bg-slate-50 rounded-md">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Sensibilidad frente al Marco Legal de Protection (Ley Crecer Juntos)</label>
+                                <textarea id="a_sensibilidad_marcos" rows="2" class="w-full p-2 border border-slate-200 bg-slate-50 rounded-lg resize-none" placeholder="Detalle el conocimiento de normativas de salvaguarda..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex flex-wrap gap-4 items-center justify-between text-xs">
+                        <div class="flex-1 min-w-[200px]">
+                            <label class="block font-bold text-slate-500 uppercase text-[10px]">Persona Informante</label>
+                            <input type="text" id="a_tecnico_nom" class="w-full border-b border-slate-200 bg-transparent outline-none py-1">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-500 uppercase text-[10px]">Fecha Mapeo</label>
+                            <input type="date" id="a_fecha_mapeo" class="border-b border-slate-200 bg-transparent outline-none py-1">
+                        </div>
+                        <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-5 py-2.5 rounded-lg transition-all cursor-pointer flex items-center gap-2">
+                            <i class="fa-solid fa-diagram-project"></i> Analizar y Mapear Actor
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm sticky top-20 space-y-6">
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+                            <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-chart-pie text-amber-600"></i> Matriz de Capacidad (Ficha 2)
+                            </h3>
+                            <button type="button" onclick="exportarExcelActores()" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1 cursor-pointer">
+                                <i class="fa-solid fa-file-excel"></i> Exportar
+                            </button>
+                        </div>
+                        <div class="relative w-full h-52 bg-slate-50 rounded-xl p-2 border border-dashed border-slate-200 flex items-center justify-center">
+                            <canvas id="chartActoresCanvas"></canvas>
+                        </div>
+                        <div class="space-y-2">
+                            <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Dictamen Estratégico</h4>
+                            <div id="analisis-actores-txt" class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600 leading-relaxed max-h-60 overflow-y-auto">
+                                <p><i class="fa-solid fa-circle-nodes text-amber-500"></i> Procese el formulario del actor cualitativo para visualizar ponderaciones y diagnóstico.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400 font-semibold mt-auto">
+        &copy; 2026 Programa Ángeles Descalzos / ASAPROSAR. Santa Ana, El Salvador.
+    </footer>
+
+    <script>
+        // --- NAVEGACIÓN ENTRE PESTAÑAS ---
+        function cambiarPestana(pestanaId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(`tab-${pestanaId}`).classList.add('active');
+            document.getElementById(`btn-${pestanaId}`).classList.add('active');
         }
-        tablinks = document.getElementsByClassName("tab-btn");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].classList.remove("active");
+
+        // Instancias globales independientes para evitar choques de renderizado
+        let chartComunitaria = null;
+        let chartActores = null;
+
+        // --- CÁLCULOS TIEMPO REAL: FICHA 1 ---
+        function calcularPoblacionComunidad() {
+            let totalF = 0, totalM = 0;
+            let datosRango = [];
+
+            document.querySelectorAll('#tbody-poblacion tr[data-rango]').forEach(row => {
+                let f = parseInt(row.querySelector('.input-f').value) || 0;
+                let m = parseInt(row.querySelector('.input-m').value) || 0;
+                let subtotal = f + m;
+                
+                row.querySelector('.tot-rango').innerText = subtotal;
+                totalF += f;
+                totalM += m;
+                datosRango.push({ f, m, subtotal });
+            });
+
+            let global = totalF + totalM;
+
+            let idx = 0;
+            document.querySelectorAll('#tbody-poblacion tr[data-rango]').forEach(row => {
+                let d = datosRango[idx];
+                row.querySelector('.pct-f').innerText = global > 0 ? ((d.f / global) * 100).toFixed(1) + '%' : '0.0%';
+                row.querySelector('.pct-m').innerText = global > 0 ? ((d.m / global) * 100).toFixed(1) + '%' : '0.0%';
+                row.querySelector('.pct-rango').innerText = global > 0 ? ((d.subtotal / global) * 100).toFixed(1) + '%' : '0.0%';
+                idx++;
+            });
+
+            document.getElementById('c_tot_f_n').innerText = totalF;
+            document.getElementById('c_tot_m_n').innerText = totalM;
+            document.getElementById('c_tot_global_n').innerText = global;
+            document.getElementById('c_tot_f_p').innerText = global > 0 ? ((totalF / global) * 100).toFixed(1) + '%' : '0.0%';
+            document.getElementById('c_tot_m_p').innerText = global > 0 ? ((totalM / global) * 100).toFixed(1) + '%' : '0.0%';
+
+            return { totalF, totalM, global };
         }
-        document.getElementById(tabId).classList.add("active");
-        evt.currentTarget.classList.add("active");
-    }
 
-    function actualizarCálculos() {
-        // Cálculo del Censo de Vendedores
-        let censoM = 0, censoH = 0, censoGlobal = 0;
-        for (let i = 1; i <= 7; i++) {
-            let m = parseInt(document.getElementById(`c${i}_m`).value) || 0;
-            let h = parseInt(document.getElementById(`c${i}_h`).value) || 0;
-            let t = m + h;
-            document.getElementById(`c${i}_t`).innerText = t;
-            censoM += m;
-            censoH += h;
-            censoGlobal += t;
-        }
-        document.getElementById('total_m_censo').innerText = censoM;
-        document.getElementById('total_h_censo').innerText = censoH;
-        document.getElementById('total_global_censo').innerText = censoGlobal;
-
-        // Captura y cálculo del Personal de Transporte
-        let totalMot = 0;
-        let totalCob = 0;
-        for (let i = 1; i <= 3; i++) {
-            let mot = parseInt(document.getElementById(`r${i}_mot`).value) || 0;
-            let cob = parseInt(document.getElementById(`r${i}_cob`).value) || 0;
-            document.getElementById(`r${i}_tot`).innerText = mot + cob;
-            totalMot += mot;
-            totalCob += cob;
+        function calcularMatriculaEscolar() {
+            let totNinas = 0, totNinos = 0;
+            document.querySelectorAll('#tabla-grados-estudio tbody tr[data-grado]').forEach(row => {
+                let ninas = parseInt(row.querySelector('.g-ninas').value) || 0;
+                let ninos = parseInt(row.querySelector('.g-ninos').value) || 0;
+                let totalGrado = ninas + ninos;
+                
+                row.querySelector('.g-total').innerText = totalGrado;
+                totNinas += ninas;
+                totNinos += ninos;
+            });
+            document.getElementById('esc_tot_ninas').innerText = totNinas;
+            document.getElementById('esc_tot_ninos').innerText = totNinos;
+            document.getElementById('esc_tot_global').innerText = totNinas + totNinos;
         }
 
-        // --- GRÁFICA DE BARRAS DINÁMICA ---
-        let maxValor = Math.max(censoM, censoH, totalMot, totalCob, 10);
-        
-        let hWomen = (censoM / maxValor) * 100;
-        let hMen = (censoH / maxValor) * 100;
-        let hDrivers = (totalMot / maxValor) * 100;
-        let hCollectors = (totalCob / maxValor) * 100;
+        // --- PROCESAMIENTO ANALÍTICO: FICHA 1 ---
+        function generarAnalisisComunitario() {
+            const demo = calcularPoblacionComunidad();
+            const familias = document.getElementById('c_familias').value || '0';
+            const frecSalud = document.getElementById('c_sal_frecuencia').value;
+            const tipoSalud = document.getElementById('c_sal_tipo_vbg').value;
 
-        document.getElementById('bar_women').style.height = hWomen + '%';
-        document.getElementById('bar_women').innerText = censoM;
-        
-        document.getElementById('bar_men').style.height = hMen + '%';
-        document.getElementById('bar_men').innerText = censoH;
-        
-        document.getElementById('bar_drivers').style.height = hDrivers + '%';
-        document.getElementById('bar_drivers').innerText = totalMot;
-        
-        document.getElementById('bar_collectors').style.height = hCollectors + '%';
-        document.getElementById('bar_collectors').innerText = totalCob;
+            if(chartComunitaria) chartComunitaria.destroy();
+            const ctx = document.getElementById('chartComunitariaCanvas').getContext('2d');
+            chartComunitaria = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Mujeres', 'Hombres'],
+                    datasets: [{
+                        data: [demo.totalF, demo.totalM],
+                        backgroundColor: ['#f43f5e', '#0284c7'],
+                        borderWidth: 1.5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } }
+                }
+            });
 
-        // --- DIAGNÓSTICO ESCRITO AUTOMATIZADO ---
-        let mercadoNombre = document.getElementById('mercado_nombre').value || 'el establecimiento';
-        let incRobo = document.getElementById('inc_robo').value;
-        let pandillasEst = document.getElementById('pandillas_estado').value;
-        let txtCualitativo = document.getElementById('analisis_cualitativo').value;
+            document.getElementById('analisis-comunitario-txt').innerHTML = `
+                <div class="space-y-1">
+                    <p>• <strong>Población Censada:</strong> <b>${demo.global}</b> habitantes.</p>
+                    <p>• <strong>Grupos Familiares:</strong> <b>${familias}</b> familias registradas.</p>
+                    <p>• <strong>Monitoreo Salud (VBG):</strong> Reportes con frecuencia <b>"${frecSalud}"</b>. Tipología común: <b>${tipoSalud}</b>.</p>
+                </div>
+            `;
+        }
 
-        if (censoGlobal === 0 && totalMot === 0) {
-            document.getElementById('analysis_text').innerHTML = "<i>Ingrese datos numéricos en las pestañas de \"Censo\" y \"Rutas\"
+        // --- PROCESAMIENTO ANALÍTICO: FICHA 2 (ACTORES CLAVE) ---
+        function generarAnalisisActores() {
+            const tipo = document.getElementById('a_tipo_actor').value;
+            const estatus = document.getElementById('a_estatus_legal').value;
+            const cobertura = document.getElementById('a_cobertura_num').value || '0';
+            const fondos = document.getElementById('a_fondos_cooperacion').value;
+            const sensibilidad = document.getElementById('a_sensibilidad_marcos').value || '';
+
+            // Construcción de métricas ponderadas numéricas de desempeño (0-100)
+            let ptEstabilidad = estatus.includes('Vigente') ? 95 : 45;
+            let ptFondos = fondos === 'SI' ? 90 : 35;
+            let ptTiempo = Math.min(100, (parseInt(document.getElementById('a_tiempo_operar').value) || 0) * 8);
+            let ptNormativa = sensibilidad.length > 15 ? 90 : 40;
+
+            if(chartActores) chartActores.destroy();
+            const ctx = document.getElementById('chartActoresCanvas').getContext('2d');
+            chartActores = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Estabilidad', 'Hist. Proy.', 'Permanencia', 'Salvaguardas'],
+                    datasets: [{
+                        data: [ptEstabilidad, ptFondos, ptTiempo, ptNormativa],
+                        backgroundColor: '#d97706',
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { min: 0, max: 100, ticks: { font: { size: 9 } } }, x: { ticks: { font: { size: 9 } } } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            let promedioCap = (ptEstabilidad + ptFondos + ptTiempo + ptNormativa) / 4;
+            let badge = promedioCap >= 65 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200';
+            let labelDictamen = promedioCap >= 65 ? 'CONFIANZA: ALIANZA VIABLE' : 'EVALUACIÓN: COOPERACIÓN ASISTIDA';
+
+            document.getElementById('analisis-actores-txt').innerHTML = `
+                <div class="space-y-1.5">
+                    <p>• <strong>Tipo Actor:</strong> <b>${tipo}</b> (Estatus: ${estatus}).</p>
+                    <p>• <strong>Cobertura Directa:</strong> ~<b>${cobertura}</b> personas en territorio.</p>
+                    <p>• <strong>Capacidad Consolidada:</strong> <b>${promedioCap.toFixed(0)}%</b>.</p>
+                    <div class="pt-1 text-center"><span class="${badge} text-[10px] px-2 py-0.5 rounded font-bold">${labelDictamen}</span></div>
+                </div>
+            `;
+        }
+
+        // --- EXPORTACIONES FIEL A EXCEL ---
+        function exportarExcelComunitaria() {
+            const demo = calcularPoblacionComunidad();
+            let dataAOA = [
+                ["ASAPROSAR - PROGRAMA ÁNGELES DESCALZOS"],
+                ["FICHA COMUNITARIA CONSOLIDADA"],
+                [],
+                ["Ubicación", document.getElementById('c_comunidad').value],
+                ["Familias", document.getElementById('c_familias').value],
+                ["Mujeres Totales", demo.totalF],
+                ["Hombres Totales", demo.totalM],
+                ["Global Habitantes", demo.global],
+                ["Técnico Responsable", document.getElementById('c_tecnico_firma').value]
+            ];
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(dataAOA);
+            XLSX.utils.book_append_sheet(wb, ws, "Ficha Comunitaria");
+            XLSX.writeFile(wb, `Ficha_Comunitaria_${document.getElementById('c_comunidad').value || 'Local'}.xlsx`);
+        }
+
+        function exportarExcelActores() {
+            let dataAOA = [
+                ["ASAPROSAR - PROGRAMA ÁNGELES DESCALZOS"],
+                ["FICHA DE ACTORES CLAVE TERRITORIALES"],
+                [],
+                ["Código Ficha", document.getElementById('a_codigo_ficha').value],
+                ["Actor", document.getElementById('a_nombre_actor').value],
+                ["Enlace Directo", document.getElementById('a_enlace_entrevistado').value],
+                ["Tipo", document.getElementById('a_tipo_actor').value],
+                ["Estatus Jurídico", document.getElementById('a_estatus_legal').value],
+                ["Cobertura N°", document.getElementById('a_cobertura_num').value]
+            ];
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(dataAOA);
+            XLSX.utils.book_append_sheet(wb, ws, "Mapeo Actor");
+            XLSX.writeFile(wb, `Mapeo_Actor_${document.getElementById('a_nombre_actor').value || 'General'}.xlsx`);
+        }
+
+        // Fechas automáticas de inicio
+        window.onload = function() {
+            const hoy = new Date().toISOString().split('T')[0];
+            document.getElementById('c_fecha_recoleccion').value = hoy;
+            document.getElementById('a_fecha_mapeo').value = hoy;
+        };
+    </script>
+</body>
+</html>
