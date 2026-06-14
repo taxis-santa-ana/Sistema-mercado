@@ -145,6 +145,80 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0,0,0,0.2);
         }
+
+        /* DISEÑO DE LA NUEVA SECCIÓN DE ANÁLISIS VISUAL */
+        .dashboard-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        .chart-container {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            height: 260px;
+        }
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 30px;
+            width: 100%;
+            height: 200px;
+            border-bottom: 2px solid #475569;
+            padding-bottom: 5px;
+            justify-content: center;
+        }
+        .bar-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 60px;
+        }
+        .bar {
+            width: 100%;
+            background-color: #3b82f6;
+            border-radius: 4px 4px 0 0;
+            transition: height 0.4s ease;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            color: white;
+            font-size: 9pt;
+            font-weight: bold;
+            padding-top: 5px;
+        }
+        .bar.women { background-color: #ec4899; }
+        .bar.men { background-color: #0284c7; }
+        .bar.drivers { background-color: #f59e0b; }
+        .bar.collectors { background-color: #10b981; }
+        .bar-label {
+            font-size: 8.5pt;
+            font-weight: 600;
+            color: #475569;
+            margin-top: 8px;
+            text-align: center;
+        }
+        .analysis-text-box {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 6px;
+            font-size: 10pt;
+            line-height: 1.6;
+            color: #1e293b;
+            overflow-y: auto;
+            height: 235px;
+        }
     </style>
 </head>
 <body>
@@ -157,7 +231,7 @@
     <div class="form-grid">
         <div class="form-group">
             <label>Nombre del Mercado Base:</label>
-            <input type="text" id="mercado_nombre" placeholder="Ej. Mercado Central de Santa Ana">
+            <input type="text" id="mercado_nombre" oninput="actualizarCálculos()" placeholder="Ej. Mercado Central de Santa Ana">
         </div>
         <div class="form-group">
             <label>Departamento:</label>
@@ -303,7 +377,7 @@
     <div class="form-grid">
         <div class="form-group">
             <label>Relación general de empresarios/transportistas con la administración:</label>
-            <select id="empresarios_rel">
+            <select id="empresarios_rel" onchange="actualizarCálculos()">
                 <option value="Favorable y fluida con mesas de trabajo activas">Favorable y fluida con mesas de trabajo activas</option>
                 <option value="Intermitente o coordinada solo ante crisis">Intermitente o coordinada solo ante crisis</option>
                 <option value="Tensa con desacuerdos en cánones o parqueos">Tensa con desacuerdos en cánones o parqueos</option>
@@ -324,7 +398,7 @@
         </div>
         <div class="form-group">
             <label>Prevalencia de Robos o Hurtos a usuarios y mercaderías:</label>
-            <select id="inc_robo">
+            <select id="inc_robo" onchange="actualizarCálculos()">
                 <option value="Baja (Raras veces al año)">Baja (Raras veces al año)</option>
                 <option value="Media (Ocurrencia mensual focalizada)">Media (Ocurrencia mensual focalizada)</option>
                 <option value="Alta (Reportes semanales constantes)">Alta (Reportes semanales constantes)</option>
@@ -349,7 +423,7 @@
         </div>
         <div class="form-group">
             <label>Estado de Control Territorial Actual / Actividad de Pandillas (Remanentes):</label>
-            <select id="pandillas_estado">
+            <select id="pandillas_estado" onchange="actualizarCálculos()">
                 <option value="Cese visible de funciones y desarticulación territorial evidente">Cese visible de funciones y desarticulación evidente</option>
                 <option value="Mutación interna (Dinámicas de control ocultas o latentes sin visibilidad pública)">Mutación interna (Dinámicas ocultas)</option>
                 <option value="Presencia residual esporádica (Células desorganizadas aisladas)">Presencia residual esporádica (Células aisladas)</option>
@@ -358,7 +432,7 @@
         </div>
         <div class="form-group full-width">
             <label>Análisis Cualitativo del Entorno Delictivo Actual (Dinámicas de campo y convivencia):</label>
-            <textarea id="analisis_cualitativo" rows="3" placeholder="Describa la realidad observada. Ej: La tranquilidad ganada en el territorio se mantiene estable; se registran dinámicas aisladas de carteristas comunes en andenes de la ruta 210 en horas de mayor congestión vespertina..."></textarea>
+            <textarea id="analisis_cualitativo" oninput="actualizarCálculos()" rows="3" placeholder="Describa la reality observada..."></textarea>
         </div>
     </div>
 
@@ -410,6 +484,33 @@
         </div>
     </div>
 
+    <div class="section-header">5. Panel de Análisis Automático en Tiempo Real</div>
+    <div class="dashboard-box">
+        <div class="chart-container">
+            <div class="chart-bars">
+                <div class="bar-wrapper">
+                    <div id="bar_women" class="bar women" style="height: 0%;">0</div>
+                    <div class="bar-label">Mujeres<br>(Censo)</div>
+                </div>
+                <div class="bar-wrapper">
+                    <div id="bar_men" class="bar men" style="height: 0%;">0</div>
+                    <div class="bar-label">Hombres<br>(Censo)</div>
+                </div>
+                <div class="bar-wrapper">
+                    <div id="bar_drivers" class="bar drivers" style="height: 0%;">0</div>
+                    <div class="bar-label">Motoristas<br>(Rutas)</div>
+                </div>
+                <div class="bar-wrapper">
+                    <div id="bar_collectors" class="bar collectors" style="height: 0%;">0</div>
+                    <div class="bar-label">Cobradores<br>(Rutas)</div>
+                </div>
+            </div>
+        </div>
+        <div id="analysis_text" class="analysis-text-box">
+            <i>Ingrese datos numéricos en el censo y rutas para generar las observaciones y el diagnóstico general automáticamente...</i>
+        </div>
+    </div>
+
     <div class="btn-box">
         <button class="btn-submit" onclick="exportarMatrizConsolidada()">📥 COMPILAR Y DESCARGAR MATRIZ XLS</button>
     </div>
@@ -433,11 +534,67 @@
         document.getElementById('total_global_censo').innerText = censoGlobal;
 
         // Captura y cálculo del Personal de Transporte
+        let totalMot = 0;
+        let totalCob = 0;
         for (let i = 1; i <= 3; i++) {
             let mot = parseInt(document.getElementById(`r${i}_mot`).value) || 0;
             let cob = parseInt(document.getElementById(`r${i}_cob`).value) || 0;
             document.getElementById(`r${i}_tot`).innerText = mot + cob;
+            totalMot += mot;
+            totalCob += cob;
         }
+
+        // --- LÓGICA DE LA GRÁFICA DE BARRAS DINÁMICA ---
+        let maxValor = Math.max(censoM, censoH, totalMot, totalCob, 10);
+        
+        let hWomen = (censoM / maxValor) * 100;
+        let hMen = (censoH / maxValor) * 100;
+        let hDrivers = (totalMot / maxValor) * 100;
+        let hCollectors = (totalCob / maxValor) * 100;
+
+        document.getElementById('bar_women').style.height = hWomen + '%';
+        document.getElementById('bar_women').innerText = censoM;
+        
+        document.getElementById('bar_men').style.height = hMen + '%';
+        document.getElementById('bar_men').innerText = censoH;
+        
+        document.getElementById('bar_drivers').style.height = hDrivers + '%';
+        document.getElementById('bar_drivers').innerText = totalMot;
+        
+        document.getElementById('bar_collectors').style.height = hCollectors + '%';
+        document.getElementById('bar_collectors').innerText = totalCob;
+
+        // --- LÓGICA DEL TEXTO DE OBSERVACIONES AUTOMÁTICAS ---
+        let mercadoNombre = document.getElementById('mercado_nombre').value || 'el establecimiento';
+        let incRobo = document.getElementById('inc_robo').value;
+        let pandillasEst = document.getElementById('pandillas_estado').value;
+        let txtCualitativo = document.getElementById('analisis_cualitativo').value;
+
+        if (censoGlobal === 0 && totalMot === 0) {
+            document.getElementById('analysis_text').innerHTML = "<i>Ingrese datos numéricos en el censo y rutas para generar las observaciones y el diagnóstico general automáticamente...</i>";
+            return;
+        }
+
+        let obsHTML = `<strong>OBSERVACIONES Y DIAGNÓSTICO PRELIMINAR:</strong><br><br>`;
+        obsHTML += `El levantamiento demográfico en <strong>${mercadoNombre}</strong> consolida una población comercial activa de <strong>${censoGlobal} vendedores</strong> dentro de la infraestructura y su periferia inmediata. `;
+        
+        if (censoM > censoH) {
+            obsHTML += `Existe una marcada prevalencia de participación femenina, representando un <strong>${Math.round((censoM/censoGlobal)*100)}%</strong> del censo local, lo que resalta la necesidad de enfocar las políticas de ordenamiento institucional con perspectiva socioeconómica y de género. `;
+        } else if (censoH > censoM) {
+            obsHTML += `El sector cuenta con una mayoría de representación masculina que equivale al <strong>${Math.round((censoH/censoGlobal)*100)}%</strong> del total general de puestos censados. `;
+        }
+
+        obsHTML += `<br><br>En el componente logístico y de transporte, se identificó un flujo de personal operativo de terminal de <strong>${totalMot} motoristas</strong> y <strong>${totalCob} cobradores</strong> de autobuses. `;
+        obsHTML += `La relación general entre las empresas de transporte y el equipo de administración se califica actualmente como <i>"${document.getElementById('empresarios_rel').value}"</i>.<br><br>`;
+        
+        obsHTML += `<strong>Evaluación de Seguridad Interna:</strong> El entorno presenta una vulnerabilidad ante hechos delictivos calificada como <strong>"${incRobo}"</strong>. `;
+        obsHTML += `Respecto al control y contención de estructuras criminales (pandillas), los datos en campo reflejan un estado de: <u>${pandillasEst}</u>. `;
+
+        if (txtCualitativo.trim() !== "") {
+            obsHTML += `<br><br><strong>Análisis Cualitativo Adicional:</strong> ${txtCualitativo}`;
+        }
+
+        document.getElementById('analysis_text').innerHTML = obsHTML;
     }
 
     function exportarMatrizConsolidada() {
